@@ -42,13 +42,39 @@ public class DatabaseConnection {
 		}
 	}
 
-	private static Connection getInstance() {
-		if(conn == null){
-			new DatabaseConnection();
-		}
-		return conn;
-	}
 
+	
+	public Kunde getKundeById(int id){
+		Kunde k = null;
+		
+		if(conn != null){
+			Statement query;
+			try{
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Kunde WHERE kunde_id = '" + id +  "'";
+				ResultSet result = query.executeQuery(sql);
+
+				while(result.next()){
+					k = new Kunde();
+					k.setId(result.getInt("kunde_id"));
+					k.setName(result.getString("name"));
+					k.setGbdatum(result.getDate("geburtsdatum"));
+					k.setStrasse(result.getString("strasse"));
+					k.setWohnort(result.getString("wohnort"));
+					k.setPlz(result.getString("plz"));
+
+				}
+				
+				
+			}catch (SQLException e){
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return k;
+	}
+/*
 	public ArrayList getKunden() {
 
 		ArrayList<Kunde> list = new ArrayList();
@@ -82,39 +108,10 @@ public class DatabaseConnection {
 
 		return list;
 
-	}
+	}*/
 
-	public ArrayList getEntlehnung() {
-		ArrayList<Entlehnung> list = new ArrayList();
-		conn = getInstance();
 
-		if(conn != null){
-			Statement query;
-			try{
-				query = conn.createStatement();
-				String sql = "SELECT * FROM Entlehnung";
-				ResultSet result = query.executeQuery(sql);
 
-				while(result.next()){
-					Entlehnung e = new Entlehnung();
-					e.setId(result.getInt("entlehnung_id"));
-					e.setKunde_id(result.getInt("kunde_id"));
-					e.setMedium_id(result.getInt("medium_id"));
-					e.setVon(result.getDate("von"));
-					e.setBis(result.getDate("bis"));
-					list.add(e);
 
-				}
-
-			}catch (SQLException e){
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		
-		return list;
-		
-	}
 
 }

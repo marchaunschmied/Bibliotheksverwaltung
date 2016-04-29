@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 public class BibliothekModel {
 	
-	public ArrayList<Kunde> kundenList;
-	public ArrayList<Entlehnung> entlehnungList;
+	public DatabaseConnection connection = null;
+
 	
 	public BibliothekModel(){
-		DatabaseConnection db = new DatabaseConnection();
-		
-		 kundenList = db.getKunden();
-		 entlehnungList = db.getEntlehnung();
+		connection = new DatabaseConnection();
 	}
+
+
+	public DatabaseConnection getConnection() {
+		return connection;
+	}
+
+
 }
