@@ -12,16 +12,16 @@ public class Regal {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getStandort_id() {
+	public int getStandortId() {
 		return standort_id;
 	}
-	public void setStandort_id(int standort_id) {
+	public void setStandortId(int standort_id) {
 		this.standort_id = standort_id;
 	}
-	public int getMedium_id() {
+	public int getMediumId() {
 		return medium_id;
 	}
-	public void setMedium_id(int medium_id) {
+	public void setMediumId(int medium_id) {
 		this.medium_id = medium_id;
 	}
 }

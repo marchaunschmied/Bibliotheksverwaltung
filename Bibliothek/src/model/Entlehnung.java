@@ -16,16 +16,16 @@ public class Entlehnung {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getKunde_id() {
+	public int getKundeId() {
 		return kunde_id;
 	}
-	public void setKunde_id(int kunde_id) {
+	public void setKundeId(int kunde_id) {
 		this.kunde_id = kunde_id;
 	}
-	public int getMedium_id() {
+	public int getMediumId() {
 		return medium_id;
 	}
-	public void setMedium_id(int medium_id) {
+	public void setMediumId(int medium_id) {
 		this.medium_id = medium_id;
 	}
 	public Date getVon() {

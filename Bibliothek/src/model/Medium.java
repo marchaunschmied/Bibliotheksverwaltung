@@ -8,12 +8,7 @@ public class Medium {
 	private int altersbes;
 	private double kosten;
 	private String genre;
-	
-	
-	
-	
-	
-	
+
 	
 	public int getId() {
 		return id;
@@ -51,6 +46,7 @@ public class Medium {
 	public void setKosten(double kosten) {
 		this.kosten = kosten;
 	}
+
 	public String getGenre() {
 		return genre;
 	}

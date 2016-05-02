@@ -8,10 +8,10 @@ public class Standort {
 	private int bibliothekar_id;
 	
 	
-	public int getStandort_id() {
+	public int getId() {
 		return id;
 	}
-	public void setStandort_id(int standort_id) {
+	public void setId(int standort_id) {
 		this.id = standort_id;
 	}
 	public int getPlz() {
@@ -32,10 +32,11 @@ public class Standort {
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
 	}
-	public int getBibliothekar_id() {
-		return bibliothekar_id;
+	public int getBibliothekarId() {
+		return id;
 	}
-	public void setBibliothekar_id(int bibliothekar_id) {
+	public void setBibliothekarId(int bibliothekar_id) {
 		this.bibliothekar_id = bibliothekar_id;
+		
 	}
 }
