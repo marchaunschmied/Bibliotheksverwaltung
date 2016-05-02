@@ -1,5 +1,9 @@
 package view;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -30,11 +34,23 @@ public class BibliothekView {
 		Scanner s = new Scanner(System.in);
 
 		while(true){
-			System.out.print("Welche ID anzeigen?: ");
-			int id = s.nextInt();
+			System.out.print("Name: ");
+			String name = s.nextLine();
+			System.out.print("GbDatum: ");
+			String gb = s.nextLine();
+
+			// Converts a string to a date
+			Date gbDatum = Date.valueOf(gb);
+
 			try{
 				// printKunde(model.getConnection().getKundeById(id));
-				printStandort(model.getConnection().getStandortById(id));
+				// printStandort(model.getConnection().getStandortById(id));
+				Bibliothekar bib = new Bibliothekar();
+				bib.setName(name);
+				bib.setGbdatum(gbDatum);
+				
+				model.getConnection().insertBibliothekar(bib);
+
 			}catch (NullPointerException e){
 				System.out.println("Wasser");
 			}
@@ -96,7 +112,8 @@ public class BibliothekView {
 		System.out.print(k.getOrt() + " \t");
 		System.out.print(k.getPlz() + " \t");
 		System.out.print(k.getStrasse() + " \t");
-		System.out.print(model.getConnection().getBibliothekarById(k.getBibliothekarId()).getName() + " \t");
+		System.out.print(
+				model.getConnection().getBibliothekarById(k.getBibliothekarId()).getName() + " \t");
 
 		System.out.println("");
 	}

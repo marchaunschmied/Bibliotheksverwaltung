@@ -7,40 +7,55 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Interface for the connection between the database and the program. Everything has to go trough this class.
+ * 
+ * @author MarcAnton
+ *
+ */
 public class DatabaseConnection {
 
 	private static Connection conn = null;
 	private static String dbHost = "192.168.56.2"; // Hostname
 	private static String dbPort = "3306"; // Port -- Standard: 3306
-	private static String dbName = "Bibliothek"; // Datenbankname
-	private static String dbUser = "root"; // Datenbankuser
-	private static String dbPass = ""; // Datenbankpasswort
+	private static String dbName = "Bibliothek"; // Database name
+	private static String dbUser = "root"; // Database user
+	private static String dbPass = ""; // Database password
 
-	// TODO Auto-generated method stub
+	private static final String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/"
+			+ dbName + "?" + "user=" + dbUser + "&" + "password=" + dbPass;
+
+	/**
+	 * Opens the connection to a database
+	 */
 	public DatabaseConnection() {
 
-		System.out.println("jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?" + "user="
-				+ dbUser + "&" + "password=" + dbPass);
+		// Connection String
+		System.out.println(connectionString);
 		try{
-			Class.forName("com.mysql.jdbc.Driver"); // Datenbanktreiber für JDBC
-													// Schnittstellen laden.
 
-			// Verbindung zur JDBC-Datenbank herstellen.
+			// Load the jdbc driver
+			Class.forName("com.mysql.jdbc.Driver");
 
-			conn = DriverManager.getConnection("jdbc:mysql://" + dbHost + ":" + dbPort + "/"
-					+ dbName + "?" + "user=" + dbUser + "&" + "password=" + dbPass);
+			// Connect to the Database
+			conn = DriverManager.getConnection(connectionString);
 			// conn = DriverManager.getConnection("jdbc:mysql://192.168.56.2:3306","root","");
 
 		}catch (ClassNotFoundException e){
-			System.out.println("Treiber nicht gefunden");
+			System.out.println("Driver not found");
 		}catch (SQLException e){
-			System.out.println("Verbindung nicht moglich");
+			System.out.println("Connection to database not possible");
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
 			System.out.println("VendorError: " + e.getErrorCode());
 			System.out.println(e.getErrorCode());
 		}
 	}
+
+	// #############################################################################################
+	// #############################################################################################
+
+	// G E T --- D A T A ---
 
 	public Bibliothekar getBibliothekarById(int id) {
 		Bibliothekar b = null;
@@ -156,7 +171,7 @@ public class DatabaseConnection {
 		}
 		return med;
 	}
-	
+
 	public Regal getRegalById(int id) {
 		Regal reg = null;
 
@@ -182,8 +197,8 @@ public class DatabaseConnection {
 		}
 		return reg;
 	}
-	
-	public Standort getStandortById(int id){
+
+	public Standort getStandortById(int id) {
 		Standort sta = null;
 
 		if(conn != null){
@@ -210,6 +225,30 @@ public class DatabaseConnection {
 		}
 		return sta;
 	}
+
+	// #############################################################################################
+	// #############################################################################################
+
+	// S E T --- D A T A
+	
+	public void insertBibliothekar(Bibliothekar bib){
+		if(conn != null){
+			Statement query;
+			
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Bibliothekar (name,geburtsdatum) VALUES('"+ bib.getName() + "','"+ bib.getGbdatum() +"');";
+				int result = query.executeUpdate(sql);
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// #############################################################################################
+	// #############################################################################################
+
+
 	/*
 	 * public ArrayList getKunden() {
 	 * 
