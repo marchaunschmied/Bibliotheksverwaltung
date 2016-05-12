@@ -33,38 +33,16 @@ public class BibliothekView {
 
 		Scanner s = new Scanner(System.in);
 
-		while(true){
-			System.out.print("Name: ");
-			String name = s.nextLine();
-			System.out.print("geburtsdatum: ");
-			String gbd = s.nextLine();
+		try{
+			// printKunde(model.getConnection().getKundeById(id));
+			// printStandort(model.getConnection().getStandortById(id));
 			
-			System.out.print("strasse: ");
-			String str = s.nextLine();
-			
-			System.out.print("wohnort: ");
-			String woh = s.nextLine();
 
-			System.out.print("plz: ");
-			String plz = s.nextLine();
-			// Converts a string to a date
-			Date gbda = Date.valueOf(gbd);
+			model.getConnection().deleteEntlehnungById(3);;
 
-			try{
-				// printKunde(model.getConnection().getKundeById(id));
-				// printStandort(model.getConnection().getStandortById(id));
-			Kunde k = new Kunde();
-			k.setName(name);
-			k.setGbdatum(gbda);
-			k.setStrasse(str);
-			k.setWohnort(woh);
-			k.setPlz(plz);
-				
-				model.getConnection().insertKunde(k);
+		}catch (NullPointerException e){
+			System.out.println("Wasser");
 
-			}catch (NullPointerException e){
-				System.out.println("Wasser");
-			}
 		}
 
 	}

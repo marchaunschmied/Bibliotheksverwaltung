@@ -232,6 +232,7 @@ public class DatabaseConnection {
 	// #############################################################################################
 
 	// S E T --- D A T A
+	// ID is not set because of auto increment in MYSQL
 
 	public void insertBibliothekar(Bibliothekar bib) {
 		if(conn != null){
@@ -329,7 +330,93 @@ public class DatabaseConnection {
 
 	// #############################################################################################
 	// #############################################################################################
+	
+	public void deleteBibliothekarById(int id) {
+		if(conn != null){
+			Statement query;
 
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Bibliothekar WHERE bibliothekar_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteEntlehnungById(int id) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Entlehnung WHERE entlehnung_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteKundeById(int id) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Kunde WHERE kunde_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteMediumById(int id) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Medium WHERE medium_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteRegalById(int id) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Regal WHERE regal_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteStandortById(int id) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "DELETE from Standort WHERE standort_id = '" + id + "' ;";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// #############################################################################################
+	// #############################################################################################
 	/*
 	 * public ArrayList getKunden() {
 	 * 
