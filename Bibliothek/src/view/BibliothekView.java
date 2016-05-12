@@ -36,20 +36,31 @@ public class BibliothekView {
 		while(true){
 			System.out.print("Name: ");
 			String name = s.nextLine();
-			System.out.print("GbDatum: ");
-			String gb = s.nextLine();
+			System.out.print("geburtsdatum: ");
+			String gbd = s.nextLine();
+			
+			System.out.print("strasse: ");
+			String str = s.nextLine();
+			
+			System.out.print("wohnort: ");
+			String woh = s.nextLine();
 
+			System.out.print("plz: ");
+			String plz = s.nextLine();
 			// Converts a string to a date
-			Date gbDatum = Date.valueOf(gb);
+			Date gbda = Date.valueOf(gbd);
 
 			try{
 				// printKunde(model.getConnection().getKundeById(id));
 				// printStandort(model.getConnection().getStandortById(id));
-				Bibliothekar bib = new Bibliothekar();
-				bib.setName(name);
-				bib.setGbdatum(gbDatum);
+			Kunde k = new Kunde();
+			k.setName(name);
+			k.setGbdatum(gbda);
+			k.setStrasse(str);
+			k.setWohnort(woh);
+			k.setPlz(plz);
 				
-				model.getConnection().insertBibliothekar(bib);
+				model.getConnection().insertKunde(k);
 
 			}catch (NullPointerException e){
 				System.out.println("Wasser");

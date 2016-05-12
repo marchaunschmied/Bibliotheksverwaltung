@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import oracle.net.aso.e;
+
 /**
  * Interface for the connection between the database and the program. Everything has to go trough this class.
  * 
@@ -230,16 +232,96 @@ public class DatabaseConnection {
 	// #############################################################################################
 
 	// S E T --- D A T A
-	
-	public void insertBibliothekar(Bibliothekar bib){
+
+	public void insertBibliothekar(Bibliothekar bib) {
 		if(conn != null){
 			Statement query;
-			
+
 			try{
 				query = conn.createStatement();
-				String sql = "INSERT INTO Bibliothekar (name,geburtsdatum) VALUES('"+ bib.getName() + "','"+ bib.getGbdatum() +"');";
+				String sql = "INSERT INTO Bibliothekar (name,geburtsdatum) VALUES('" + bib.getName()
+						+ "','" + bib.getGbdatum() + "');";
 				int result = query.executeUpdate(sql);
-			}catch(SQLException e){
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void insertEntlehnung(Entlehnung ent) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Entlehnung (kunde_id,medium_id,von,bis) VALUES('"
+						+ ent.getKundeId() + "','" + ent.getMediumId() + "','" + ent.getVon()
+						+ "','" + ent.getBis() + "');";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertKunde(Kunde kun) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Kunde (name,geburtsdatum,strasse,wohnort,plz) VALUES('"
+						+ kun.getName() + "','" + kun.getGbdatum() + "','" + kun.getStrasse()
+						+ "','" + kun.getWohnort() + "','" + kun.getPlz() + "');";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertMedium(Medium med) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Medium (titel,typ,autor,altersbes,kosten,genre) VALUES('"
+						+ med.getTitel() + "','" + med.getTyp() + "','" + med.getAutor()
+						+ "','" + med.getAltersbes() + "','" + med.getKosten() + "','" + med.getGenre() + "');";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertRegal(Regal reg) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Regal (standort_id,medium_id) VALUES('"
+						+ reg.getStandortId() + "','" + reg.getMediumId() + "');";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertStandort(Standort sta) {
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "INSERT INTO Standort (plz,ort,strasse,bibliothekar_id) VALUES('"
+						+ sta.getPlz() + "','" + sta.getOrt() + "','" + sta.getStrasse()
+						 + sta.getBibliothekarId() + "');";
+				int result = query.executeUpdate(sql);
+			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
@@ -247,7 +329,6 @@ public class DatabaseConnection {
 
 	// #############################################################################################
 	// #############################################################################################
-
 
 	/*
 	 * public ArrayList getKunden() {
