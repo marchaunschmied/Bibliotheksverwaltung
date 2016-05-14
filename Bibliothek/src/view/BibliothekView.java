@@ -33,18 +33,20 @@ public class BibliothekView {
 
 		Scanner s = new Scanner(System.in);
 
-		try{
-			// printKunde(model.getConnection().getKundeById(id));
-			// printStandort(model.getConnection().getStandortById(id));
-			
+		while(true){
+			System.out.print("ID: ");
+			int id = s.nextInt();
+			try{
+				printKunde(model.getConnection().getKundeById(id));
+				// printStandort(model.getConnection().getStandortById(id));
 
-			model.getConnection().deleteEntlehnungById(3);;
+				// model.getConnection().deleteEntlehnungById(3);;
 
-		}catch (NullPointerException e){
-			System.out.println("Wasser");
+			}catch (NullPointerException e){
+				System.out.println("Wasser");
 
+			}
 		}
-
 	}
 
 	public void printBibliothekar(Bibliothekar b) {
