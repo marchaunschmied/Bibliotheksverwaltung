@@ -8,12 +8,13 @@ public class BibliothekarTableModel extends AbstractTableModel {
 
 	private BibliothekModel model;
 	
-	private String[] columnNames = { "id", "name" };
-	private Object[][] data = {{"",""},{"",""}};
+	private String[] columnNames = { "id", "name", "Geburtsdatum" };
+	private Object[][] data = {{"","",""},{"","",""},{"","",""}};
 
 	public BibliothekarTableModel() {
 	
 	}
+
 
 	
 	@Override
