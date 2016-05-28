@@ -264,7 +264,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void insertKunde(Kunde kun) {
 		if(conn != null){
 			Statement query;
@@ -280,7 +280,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void insertMedium(Medium med) {
 		if(conn != null){
 			Statement query;
@@ -288,15 +288,16 @@ public class DatabaseConnection {
 			try{
 				query = conn.createStatement();
 				String sql = "INSERT INTO Medium (titel,typ,autor,altersbes,kosten,genre) VALUES('"
-						+ med.getTitel() + "','" + med.getTyp() + "','" + med.getAutor()
-						+ "','" + med.getAltersbes() + "','" + med.getKosten() + "','" + med.getGenre() + "');";
+						+ med.getTitel() + "','" + med.getTyp() + "','" + med.getAutor() + "','"
+						+ med.getAltersbes() + "','" + med.getKosten() + "','" + med.getGenre()
+						+ "');";
 				int result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void insertRegal(Regal reg) {
 		if(conn != null){
 			Statement query;
@@ -311,7 +312,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void insertStandort(Standort sta) {
 		if(conn != null){
 			Statement query;
@@ -320,7 +321,7 @@ public class DatabaseConnection {
 				query = conn.createStatement();
 				String sql = "INSERT INTO Standort (plz,ort,strasse,bibliothekar_id) VALUES('"
 						+ sta.getPlz() + "','" + sta.getOrt() + "','" + sta.getStrasse()
-						 + sta.getBibliothekarId() + "');";
+						+ sta.getBibliothekarId() + "');";
 				int result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
@@ -330,7 +331,7 @@ public class DatabaseConnection {
 
 	// #############################################################################################
 	// #############################################################################################
-	
+
 	public void deleteBibliothekarById(int id) {
 		if(conn != null){
 			Statement query;
@@ -344,7 +345,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void deleteEntlehnungById(int id) {
 		if(conn != null){
 			Statement query;
@@ -358,7 +359,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void deleteKundeById(int id) {
 		if(conn != null){
 			Statement query;
@@ -372,7 +373,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void deleteMediumById(int id) {
 		if(conn != null){
 			Statement query;
@@ -386,7 +387,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void deleteRegalById(int id) {
 		if(conn != null){
 			Statement query;
@@ -400,7 +401,7 @@ public class DatabaseConnection {
 			}
 		}
 	}
-	
+
 	public void deleteStandortById(int id) {
 		if(conn != null){
 			Statement query;
@@ -417,27 +418,35 @@ public class DatabaseConnection {
 
 	// #############################################################################################
 	// #############################################################################################
-	/*
-	 * public ArrayList getKunden() {
-	 * 
-	 * ArrayList<Kunde> list = new ArrayList(); conn = getInstance();
-	 * 
-	 * if(conn != null){ Statement query; try{ query = conn.createStatement(); String sql = "SELECT * FROM Kunde"; ResultSet
-	 * result = query.executeQuery(sql);
-	 * 
-	 * while(result.next()){ Kunde k = new Kunde(); k.setId(result.getInt("kunde_id")); k.setName(result.getString("name"));
-	 * k.setGbdatum(result.getDate("geburtsdatum")); k.setStrasse(result.getString("strasse"));
-	 * k.setWohnort(result.getString("wohnort")); k.setPlz(result.getString("plz"));
-	 * 
-	 * list.add(k);
-	 * 
-	 * }
-	 * 
-	 * }catch (SQLException e){ // TODO Auto-generated catch block e.printStackTrace(); } }
-	 * 
-	 * return list;
-	 * 
-	 * }
-	 */
+
+	public ArrayList getBibliothekarAll() {
+
+		ArrayList<Bibliothekar> list = new ArrayList();
+
+		if(conn != null){
+			Statement query;
+			try{
+				
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Bibliothekar";
+				ResultSet result = query.executeQuery(sql);
+				
+				while(result.next()){
+					Bibliothekar bib = new Bibliothekar();
+					bib.setId(result.getInt("bibliothekar_id"));
+					bib.setName(result.getString("name"));
+					bib.setGbdatum(result.getDate("geburtsdatum"));
+					
+
+					list.add(bib);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
 
 }
