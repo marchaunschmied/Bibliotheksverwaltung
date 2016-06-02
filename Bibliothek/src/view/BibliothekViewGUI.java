@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import controller.BibliothekController;
 import model.BibliothekModel;
 import model.Bibliothekar;
+import model.Entlehnung;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
@@ -32,6 +33,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * This class is partly auto-generated. For the GUI the Eclipse Window Builder is used
@@ -45,13 +47,17 @@ public class BibliothekViewGUI extends JFrame {
 	private BibliothekController controller;
 
 	private JPanel contentPane;
-	private JTable table;
-	private JButton btnNeuerBibliothekar;
+	private JTable bibTable;
+	private JButton btnNeu;
 	private JButton btnLschen;
-	private JPanel panel;
+	private JPanel bibPanel;
 	private JPanel panel_1;
 	private JTabbedPane tabbedPane;
 	private JButton btnndern;
+	private JPanel entPanel;
+	private JScrollPane entScrollPane;
+	private JTable entTable;
+	private JPanel buttonPanel;
 
 	/**
 	 * Create the frame.
@@ -68,33 +74,20 @@ public class BibliothekViewGUI extends JFrame {
 		setContentPane(contentPane);
 
 		ArrayList<Bibliothekar> bibList = model.getConnection().getBibliothekarAll();
+		ArrayList<Entlehnung> entList = model.getConnection().getEntlehnungAll();
 
-		/**
-		 * TableModel is used for the data storage in the table
-		 */
-		// BibliothekarTableModel bibTableModel = new BibliothekarTableModel();
-		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane);
-
-		panel = new JPanel();
-		tabbedPane.addTab("Bibliothekar", panel);
-		// panel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnNeuerBibliothekar, scrollPane, table,
-		// btnLschen}));
-		panel.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane scrollPane = new JScrollPane();
-
-		DefaultTableModel tbm = new DefaultTableModel(new Object[][] {},
+		DefaultTableModel bibTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "name", "Geburtsdatum" });
 
-		table = new JTable(tbm);
-		scrollPane.setViewportView(table);
-		panel.add(scrollPane, BorderLayout.CENTER);
+		DefaultTableModel entTableModel = new DefaultTableModel(new Object[][] {},
+				new String[] { "id", "kunde_id", "medium_id", "von", "bis" });
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		buttonPanel = new JPanel();
+		contentPane.add(buttonPanel, BorderLayout.WEST);
 
 		panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.WEST);
+		buttonPanel.add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 119, 0 };
 		gbl_panel_1.rowHeights = new int[] { 0, 23, 0, 0, 0, 0, 0 };
@@ -102,13 +95,12 @@ public class BibliothekViewGUI extends JFrame {
 		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
 
-		btnNeuerBibliothekar = new JButton("Neuer Bibliothekar");
-		GridBagConstraints gbc_btnNeuerBibliothekar = new GridBagConstraints();
-		gbc_btnNeuerBibliothekar.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNeuerBibliothekar.anchor = GridBagConstraints.WEST;
-		gbc_btnNeuerBibliothekar.gridx = 0;
-		gbc_btnNeuerBibliothekar.gridy = 0;
-		panel_1.add(btnNeuerBibliothekar, gbc_btnNeuerBibliothekar);
+		btnNeu = new JButton("Neu");
+		GridBagConstraints gbc_btnNeu = new GridBagConstraints();
+		gbc_btnNeu.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNeu.gridx = 0;
+		gbc_btnNeu.gridy = 0;
+		panel_1.add(btnNeu, gbc_btnNeu);
 
 		btnLschen = new JButton("L\u00F6schen");
 		GridBagConstraints gbc_btnLschen = new GridBagConstraints();
@@ -125,11 +117,11 @@ public class BibliothekViewGUI extends JFrame {
 		panel_1.add(btnndern, gbc_btnndern);
 		btnLschen.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				model.getConnection()
-						.deleteBibliothekarById((int) tbm.getValueAt(table.getSelectedRow(), 0));
+				model.getConnection().deleteBibliothekarById(
+						(int) bibTableModel.getValueAt(bibTable.getSelectedRow(), 0));
 			}
 		});
-		btnNeuerBibliothekar.addActionListener(new ActionListener(){
+		btnNeu.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Bibliothekar b = new Bibliothekar();
 				b.setName("Tester");
@@ -137,6 +129,31 @@ public class BibliothekViewGUI extends JFrame {
 				model.getConnection().insertBibliothekar(b);
 			}
 		});
+
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		contentPane.add(tabbedPane);
+
+		bibPanel = new JPanel();
+		tabbedPane.addTab("Bibliothekar", bibPanel);
+		bibPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JScrollPane bibScrollPane = new JScrollPane();
+
+		bibTable = new JTable(bibTableModel);
+		bibScrollPane.setViewportView(bibTable);
+		bibPanel.add(bibScrollPane);
+
+		entPanel = new JPanel();
+		tabbedPane.addTab("Entlehnung", null, entPanel, null);
+		entPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		entScrollPane = new JScrollPane();
+
+		entPanel.add(entScrollPane, BorderLayout.NORTH);
+
+		entTable = new JTable(entTableModel);
+		entScrollPane.setViewportView(entTable);
+		entPanel.add(entScrollPane, BorderLayout.CENTER);
 
 		/**
 		 * Every value has to be set
@@ -160,9 +177,16 @@ public class BibliothekViewGUI extends JFrame {
 		 */
 
 		for (int i = 0; i < bibList.size(); i++){
-			Object[] cont = { bibList.get(i).getId(), bibList.get(i).getName(),
+			Object[] content = { bibList.get(i).getId(), bibList.get(i).getName(),
 					bibList.get(i).getGbdatum() };
-			tbm.addRow(cont);
+			bibTableModel.addRow(content);
+		}
+
+		for (int i = 0; i < entList.size(); i++){
+			Object[] content = { entList.get(i).getId(), entList.get(i).getKundeId(),
+					entList.get(i).getMediumId(), entList.get(i).getVon(),
+					entList.get(i).getBis() };
+			entTableModel.addRow(content);
 		}
 	}
 

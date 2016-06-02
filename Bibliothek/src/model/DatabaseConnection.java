@@ -448,5 +448,35 @@ public class DatabaseConnection {
 		}
 		return list;
 	}
+	
+	public ArrayList getEntlehnungAll() {
 
+		ArrayList<Entlehnung> list = new ArrayList();
+
+		if(conn != null){
+			Statement query;
+			try{
+				
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Entlehnung";
+				ResultSet result = query.executeQuery(sql);
+				
+				while(result.next()){
+					Entlehnung ent = new Entlehnung();
+					ent.setId(result.getInt("entlehnung_id"));
+					ent.setKundeId(result.getInt("kunde_id"));
+					ent.setMediumId(result.getInt("medium_id"));
+					ent.setVon(result.getDate("von"));
+					ent.setBis(result.getDate("bis"));
+
+					list.add(ent);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
 }
