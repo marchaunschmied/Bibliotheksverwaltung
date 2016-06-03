@@ -40,4 +40,9 @@ public class Entlehnung {
 	public void setBis(Date bis) {
 		this.bis = bis;
 	}
+	
+	public Object[] getFields() {
+		Object[] fields = { id, kunde_id, medium_id,von,bis };
+		return fields;
+	}
 }

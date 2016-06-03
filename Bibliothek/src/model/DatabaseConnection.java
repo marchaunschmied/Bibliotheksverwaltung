@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import oracle.net.aso.e;
 
@@ -419,26 +420,26 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
-	public ArrayList getBibliothekarAll() {
+	public HashMap<Integer,Bibliothekar> getBibliothekarAll() {
 
-		ArrayList<Bibliothekar> list = new ArrayList();
+		HashMap<Integer, Bibliothekar> bibMap = new HashMap<Integer, Bibliothekar>();
+		
 
 		if(conn != null){
 			Statement query;
 			try{
-				
+
 				query = conn.createStatement();
 				String sql = "SELECT * FROM Bibliothekar";
 				ResultSet result = query.executeQuery(sql);
-				
+
 				while(result.next()){
 					Bibliothekar bib = new Bibliothekar();
 					bib.setId(result.getInt("bibliothekar_id"));
 					bib.setName(result.getString("name"));
 					bib.setGbdatum(result.getDate("geburtsdatum"));
-					
 
-					list.add(bib);
+					bibMap.put(bib.getId(), bib);
 
 				}
 			}catch (SQLException e){
@@ -446,21 +447,21 @@ public class DatabaseConnection {
 			}
 
 		}
-		return list;
+		return bibMap;
 	}
-	
-	public ArrayList getEntlehnungAll() {
 
-		ArrayList<Entlehnung> list = new ArrayList();
+	public HashMap<Integer,Entlehnung> getEntlehnungAll() {
+
+		HashMap<Integer,Entlehnung> entMap = new HashMap<Integer,Entlehnung>();
 
 		if(conn != null){
 			Statement query;
 			try{
-				
+
 				query = conn.createStatement();
 				String sql = "SELECT * FROM Entlehnung";
 				ResultSet result = query.executeQuery(sql);
-				
+
 				while(result.next()){
 					Entlehnung ent = new Entlehnung();
 					ent.setId(result.getInt("entlehnung_id"));
@@ -469,7 +470,7 @@ public class DatabaseConnection {
 					ent.setVon(result.getDate("von"));
 					ent.setBis(result.getDate("bis"));
 
-					list.add(ent);
+					entMap.put(ent.getId(),ent);
 
 				}
 			}catch (SQLException e){
@@ -477,6 +478,40 @@ public class DatabaseConnection {
 			}
 
 		}
-		return list;
+		return entMap;
+	}
+
+	public int getLastEntryId(String tableName) {
+
+		String idName = "";
+		int id = -1;
+		switch (tableName) {
+		case "Bibliothekar":
+			idName = "bibliothekar_id";
+			break;
+		case "Entlehnung":
+			idName = "entlehnung_id";
+			break;
+		default:
+			break;
+		}
+
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "SELECT " + idName + " FROM " + tableName + " ORDER BY " + idName
+						+ " DESC LIMIT 1;";
+				ResultSet result = query.executeQuery(sql);
+				result.next();
+				id = result.getInt(idName);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return id;
 	}
 }
