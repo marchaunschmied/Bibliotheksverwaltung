@@ -2,19 +2,19 @@ package model;
 
 import java.sql.Date;
 
-public class Kunde   {
-	
+public class Kunde {
+
 	private int id;
 	private String name;
 	private Date gbdatum;
 	private String strasse;
 	private String wohnort;
 	private String plz;
-	
-	public Kunde(){
-		
+
+	public Kunde() {
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -62,6 +62,10 @@ public class Kunde   {
 	public void setPlz(String plz) {
 		this.plz = plz;
 	}
-	
-	
+
+	public Object[] getFields() {
+		Object[] fields = { id, name, gbdatum, strasse, wohnort, plz };
+		return fields;
+	}
+
 }

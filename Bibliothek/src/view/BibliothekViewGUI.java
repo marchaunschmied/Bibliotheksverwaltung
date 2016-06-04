@@ -11,6 +11,7 @@ import controller.BibliothekController;
 import model.BibliothekModel;
 import model.Bibliothekar;
 import model.Entlehnung;
+import model.Kunde;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
@@ -84,6 +85,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	private JTextField entInputBis;
 	private JComboBox entBoxKunde;
 	private JComboBox entBoxMedium;
+	private HashMap<Integer, Kunde> kunMap;
 
 	/**
 	 * Create the frame.
@@ -100,8 +102,12 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
+		/**
+		 * reads all data from the database and puts it into a hash map
+		 */
 		bibMap = model.getConnection().getBibliothekarAll();
 		entMap = model.getConnection().getEntlehnungAll();
+		kunMap = model.getConnection().getKundeAll();
 
 		bibTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "name", "Geburtsdatum" });
@@ -186,44 +192,47 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		entPanel.add(entScrollPane, BorderLayout.NORTH);
 
-		entTable = new JTable(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"id", "kunde_id", "medium_id", "von", "bis"
-			}
-		));
+		entTable = new JTable(entTableModel);
 		entScrollPane.setViewportView(entTable);
 		entPanel.add(entScrollPane, BorderLayout.CENTER);
-		
+
 		entInput = new JPanel();
-		entInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
-						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		entInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
+
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		entPanel.add(entInput);
 		entInput.setLayout(new GridLayout(0, 2, 0, 5));
-		
+
 		lblKunde = new JLabel("Kunde");
 		entInput.add(lblKunde);
-		
-		entBoxKunde = new JComboBox();
+
+		String[] entBoxKundeArguments = new String[kunMap.size()];
+		int cnt = 0;
+		for (Iterator iterator = kunMap.keySet().iterator(); iterator.hasNext();){
+			Kunde kun = kunMap.get(iterator.next());
+			entBoxKundeArguments[cnt] = kun.getName() + " ( " + kun.getId() + " )";
+			cnt++;
+		}
+
+		entBoxKunde = new JComboBox(entBoxKundeArguments);
 		entInput.add(entBoxKunde);
-		
+
 		lblMedium = new JLabel("Medium");
 		entInput.add(lblMedium);
-		
+
 		entBoxMedium = new JComboBox();
 		entInput.add(entBoxMedium);
-		
+
 		lblVon = new JLabel("Von");
 		entInput.add(lblVon);
-		
+
 		entInputVon = new JTextField();
 		entInput.add(entInputVon);
 		entInputVon.setColumns(10);
-		
+
 		lblBis = new JLabel("Bis");
 		entInput.add(lblBis);
-		
+
 		entInputBis = new JTextField();
 		entInput.add(entInputBis);
 		entInputBis.setColumns(10);
@@ -237,6 +246,8 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		for (Iterator iterator = entMap.keySet().iterator(); iterator.hasNext();){
 			Entlehnung ent = entMap.get(iterator.next());
 			Object[] content = ent.getFields();
+			content[1] = model.getConnection().getKundeById((int) content[1]).getName();
+			content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
 			entTableModel.addRow(content);
 		}
 		/*
@@ -256,6 +267,17 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		 * entList.get(i).getVon(), entList.get(i).getBis() }; entTableModel.addRow(content); }
 		 */
 
+	}
+	
+	private int getComboId(JComboBox box){
+		char[] c = box.getSelectedItem().toString().toCharArray();
+		String id = "";
+		for (int i = 0; i < c.length; i++){
+			if(Character.isDigit(c[i])){
+				id += c[i];
+			}
+		}
+		return Integer.parseInt(id);
 	}
 
 	@Override
@@ -293,8 +315,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				String bibName = bibInputName.getText();
 
 				Date bibGeburtsdatum = Date.valueOf(bibInputGeburtsdatum.getText());
-				
-				
 
 				b.setName(bibName);
 				b.setGbdatum(bibGeburtsdatum);
@@ -318,8 +338,18 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		}
 
 		if(e.getSource() == btnndern){
-			
+
 			System.out.println("Ä N D E R N");
+
+			switch (selectedTableName) {
+			case "Bibliothekar":
+				break;
+			case "Entlehnung":
+				System.out.println(getComboId(entBoxKunde));
+				break;
+			default:
+				break;
+			}
 
 		}
 

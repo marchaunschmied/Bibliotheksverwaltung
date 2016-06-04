@@ -480,7 +480,45 @@ public class DatabaseConnection {
 		}
 		return entMap;
 	}
+	
+	public HashMap<Integer, Kunde> getKundeAll() {
+		
+		HashMap<Integer,Kunde> kunMap = new HashMap<Integer,Kunde>();
+		
+		if(conn != null){
+			Statement query;
+			try{
 
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Kunde";
+				ResultSet result = query.executeQuery(sql);
+
+				while(result.next()){
+					Kunde kun = new Kunde();
+					
+					kun.setId(result.getInt("kunde_id"));
+					kun.setName(result.getString("name"));
+					kun.setGbdatum(result.getDate("geburtsdatum"));
+					kun.setStrasse(result.getString("strasse"));
+					kun.setWohnort(result.getString("wohnort"));
+					kun.setPlz(result.getString("plz"));
+					
+					kunMap.put(kun.getId(), kun);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return kunMap;
+		
+	}
+
+	// #############################################################################################
+	// #############################################################################################
+
+	
 	public int getLastEntryId(String tableName) {
 
 		String idName = "";
