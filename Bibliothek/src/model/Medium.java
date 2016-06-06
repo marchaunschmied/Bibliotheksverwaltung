@@ -53,4 +53,9 @@ public class Medium {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
+	
+	public Object[] getFields() {
+		Object[] fields = { id, titel, typ, autor, altersbes, kosten,genre };
+		return fields;
+	}
 }

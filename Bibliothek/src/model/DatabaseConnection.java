@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import oracle.net.aso.e;
 
@@ -420,10 +420,9 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
-	public HashMap<Integer,Bibliothekar> getBibliothekarAll() {
+	public LinkedHashMap<Integer, Bibliothekar> getBibliothekarAll() {
 
-		HashMap<Integer, Bibliothekar> bibMap = new HashMap<Integer, Bibliothekar>();
-		
+		LinkedHashMap<Integer, Bibliothekar> bibMap = new LinkedHashMap<Integer, Bibliothekar>();
 
 		if(conn != null){
 			Statement query;
@@ -438,7 +437,6 @@ public class DatabaseConnection {
 					bib.setId(result.getInt("bibliothekar_id"));
 					bib.setName(result.getString("name"));
 					bib.setGbdatum(result.getDate("geburtsdatum"));
-
 					bibMap.put(bib.getId(), bib);
 
 				}
@@ -450,9 +448,9 @@ public class DatabaseConnection {
 		return bibMap;
 	}
 
-	public HashMap<Integer,Entlehnung> getEntlehnungAll() {
+	public LinkedHashMap<Integer, Entlehnung> getEntlehnungAll() {
 
-		HashMap<Integer,Entlehnung> entMap = new HashMap<Integer,Entlehnung>();
+		LinkedHashMap<Integer, Entlehnung> entMap = new LinkedHashMap<Integer, Entlehnung>();
 
 		if(conn != null){
 			Statement query;
@@ -470,7 +468,7 @@ public class DatabaseConnection {
 					ent.setVon(result.getDate("von"));
 					ent.setBis(result.getDate("bis"));
 
-					entMap.put(ent.getId(),ent);
+					entMap.put(ent.getId(), ent);
 
 				}
 			}catch (SQLException e){
@@ -480,11 +478,11 @@ public class DatabaseConnection {
 		}
 		return entMap;
 	}
-	
-	public HashMap<Integer, Kunde> getKundeAll() {
-		
-		HashMap<Integer,Kunde> kunMap = new HashMap<Integer,Kunde>();
-		
+
+	public LinkedHashMap<Integer, Kunde> getKundeAll() {
+
+		LinkedHashMap<Integer, Kunde> kunMap = new LinkedHashMap<Integer, Kunde>();
+
 		if(conn != null){
 			Statement query;
 			try{
@@ -495,14 +493,14 @@ public class DatabaseConnection {
 
 				while(result.next()){
 					Kunde kun = new Kunde();
-					
+
 					kun.setId(result.getInt("kunde_id"));
 					kun.setName(result.getString("name"));
 					kun.setGbdatum(result.getDate("geburtsdatum"));
 					kun.setStrasse(result.getString("strasse"));
 					kun.setWohnort(result.getString("wohnort"));
 					kun.setPlz(result.getString("plz"));
-					
+
 					kunMap.put(kun.getId(), kun);
 
 				}
@@ -512,13 +510,132 @@ public class DatabaseConnection {
 
 		}
 		return kunMap;
-		
+
+	}
+
+	public LinkedHashMap<Integer, Medium> getMediumAll() {
+
+		LinkedHashMap<Integer, Medium> medMap = new LinkedHashMap<Integer, Medium>();
+
+		if(conn != null){
+			Statement query;
+			try{
+
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Medium";
+				ResultSet result = query.executeQuery(sql);
+
+				while(result.next()){
+					Medium med = new Medium();
+
+					med.setId(result.getInt("medium_id"));
+					med.setTitel(result.getString("titel"));
+					med.setTyp(result.getString("typ"));
+					med.setAutor(result.getString("autor"));
+					med.setAltersbes(result.getInt("altersbes"));
+					med.setKosten(result.getInt("kosten"));
+					med.setGenre(result.getString("genre"));
+
+					medMap.put(med.getId(), med);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return medMap;
+	}
+
+	public LinkedHashMap<Integer, Regal> getRegalAll() {
+
+		LinkedHashMap<Integer, Regal> regMap = new LinkedHashMap<Integer, Regal>();
+
+		if(conn != null){
+			Statement query;
+			try{
+
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Regal";
+				ResultSet result = query.executeQuery(sql);
+
+				while(result.next()){
+					Regal reg = new Regal();
+
+					reg.setId(result.getInt("regal_id"));
+					reg.setMediumId(result.getInt("medium_id"));
+					reg.setStandortId(result.getInt("standort_id"));
+
+					regMap.put(reg.getId(), reg);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return regMap;
+	}
+
+	public LinkedHashMap<Integer, Standort> getStandortAll() {
+
+		LinkedHashMap<Integer, Standort> staMap = new LinkedHashMap<Integer, Standort>();
+
+		if(conn != null){
+			Statement query;
+			try{
+
+				query = conn.createStatement();
+				String sql = "SELECT * FROM Standort";
+				ResultSet result = query.executeQuery(sql);
+
+				while(result.next()){
+					Standort sta = new Standort();
+
+					sta.setId(result.getInt("standort_id"));
+					sta.setBibliothekarId(result.getInt("bibliothekar_id"));
+					sta.setOrt(result.getString("ort"));
+					sta.setPlz(result.getInt("plz"));
+					sta.setStrasse(result.getString("strasse"));
+
+					staMap.put(sta.getId(), sta);
+
+				}
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+		}
+		return staMap;
+	}
+	// #############################################################################################
+	// #############################################################################################
+
+	public int updateBibliothekar(Bibliothekar bib) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Bibliothekar SET name='" + bib.getName() + "', geburtsdatum='"
+						+ bib.getGbdatum() + "' WHERE bibliothekar_id='" + bib.getId() + "';";
+				result = query.executeUpdate(sql);
+				
+				System.out.println(sql);
+				System.out.println(result);
+				
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 
 	// #############################################################################################
 	// #############################################################################################
-
-	
 	public int getLastEntryId(String tableName) {
 
 		String idName = "";
@@ -552,4 +669,5 @@ public class DatabaseConnection {
 
 		return id;
 	}
+
 }
