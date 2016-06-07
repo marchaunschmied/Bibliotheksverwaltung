@@ -13,6 +13,8 @@ import model.Bibliothekar;
 import model.Entlehnung;
 import model.Kunde;
 import model.Medium;
+import model.Regal;
+import model.Standort;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTable;
@@ -94,44 +96,20 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	private JSeparator separator;
 	private JPanel kunPanel;
 	private JPanel kunInput;
-	private JLabel label;
-	private JComboBox comboBox;
-	private JLabel label_1;
-	private JComboBox comboBox_1;
-	private JLabel label_2;
-	private JTextField textField;
-	private JLabel label_3;
-	private JTextField textField_1;
+	private JTextField kunInputStrasse;
 	private JPanel medPanel;
 	private JPanel medInput;
-	private JLabel label_4;
-	private JComboBox comboBox_2;
-	private JLabel label_5;
-	private JComboBox comboBox_3;
-	private JLabel label_6;
-	private JTextField textField_2;
-	private JLabel label_7;
-	private JTextField textField_3;
+	private JLabel medLblTitel;
 	private JPanel regPanel;
 	private JPanel regInput;
-	private JLabel label_8;
-	private JComboBox comboBox_4;
-	private JLabel label_9;
-	private JComboBox comboBox_5;
-	private JLabel label_10;
-	private JTextField textField_4;
-	private JLabel label_11;
-	private JTextField textField_5;
+	private JLabel regLblStandort;
+	private JLabel regLblMedium;
 	private JPanel staPanel;
 	private JPanel staInput;
-	private JLabel label_12;
-	private JComboBox comboBox_6;
-	private JLabel label_13;
-	private JComboBox comboBox_7;
-	private JLabel label_14;
-	private JTextField textField_6;
-	private JLabel label_15;
-	private JTextField textField_7;
+	private JLabel staLblPlz;
+	private JTextField staInputPlz;
+	private JLabel staLblOrt;
+	private JTextField staInputOrt;
 	private JTable kunTable;
 	private JScrollPane kunScrollPane;
 	private JTable medTable;
@@ -144,6 +122,34 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	private DefaultTableModel medTableModel;
 	private DefaultTableModel regTableModel;
 	private DefaultTableModel staTableModel;
+	private LinkedHashMap<Integer, Standort> staMap;
+	private LinkedHashMap<Integer, Regal> regMap;
+	private JLabel kunLblName;
+	private JTextField kunInputGeburtsdatum;
+	private JTextField kunInputName;
+	private JLabel kunLblGeburtsdatum;
+	private JLabel kunLblStrasse;
+	private JTextField kunInputWohnort;
+	private JLabel kunLblWohnort;
+	private JTextField kunInputPlz;
+	private JLabel kunLblPlz;
+	private JTextField medInputTitel;
+	private JTextField medInputTyp;
+	private JLabel medLblTyp;
+	private JTextField medInputAutor;
+	private JLabel medLblAutor;
+	private JTextField medInputAltersbeschränkung;
+	private JLabel medLblAltersbeschrnkung;
+	private JTextField medInputKosten;
+	private JLabel medLblKosten;
+	private JTextField medInputGenre;
+	private JLabel medLblGenre;
+	private JComboBox regBoxStandort;
+	private JComboBox regBoxMedium;
+	private JTextField staInputStrasse;
+	private JLabel staLblStrasse;
+	private JComboBox staBoxBibliothekar;
+	private JLabel staLblBibliothekar;
 
 	/**
 	 * Create the frame.
@@ -154,7 +160,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		this.controller = controller;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 637, 735);
+		setBounds(100, 100, 700, 735);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -167,6 +173,8 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		entMap = model.getConnection().getEntlehnungAll();
 		kunMap = model.getConnection().getKundeAll();
 		medMap = model.getConnection().getMediumAll();
+		regMap = model.getConnection().getRegalAll();
+		staMap = model.getConnection().getStandortAll();
 
 		/**
 		 * Declare all table models
@@ -277,6 +285,13 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
 
+		
+		
+		
+		
+		
+		
+		
 		bibPanel = new JPanel();
 		tabbedPane.addTab("Bibliothekar", bibPanel);
 		bibPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -307,6 +322,10 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		bibInput.add(bibInputGeburtsdatum);
 		bibInputGeburtsdatum.setColumns(10);
 
+		
+		
+		
+		
 		entPanel = new JPanel();
 		tabbedPane.addTab("Entlehnung", null, entPanel, null);
 		entPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -368,6 +387,11 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		entInput.add(entInputBis);
 		entInputBis.setColumns(10);
 		
+		
+		
+		
+		
+		
 		kunPanel = new JPanel();
 		tabbedPane.addTab("Kunde", null, kunPanel, null);
 		kunPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -385,31 +409,45 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		kunPanel.add(kunInput);
 		kunInput.setLayout(new GridLayout(0, 2, 0, 5));
 		
-		label = new JLabel("Kunde");
-		kunInput.add(label);
+		kunLblName = new JLabel("Name");
+		kunInput.add(kunLblName);
 		
-		comboBox = new JComboBox(new Object[]{});
-		kunInput.add(comboBox);
+		kunInputName = new JTextField();
+		kunInput.add(kunInputName);
+		kunInputName.setColumns(10);
 		
-		label_1 = new JLabel("Medium");
-		kunInput.add(label_1);
+		kunLblGeburtsdatum = new JLabel("Geburtsdatum");
+		kunInput.add(kunLblGeburtsdatum);
 		
-		comboBox_1 = new JComboBox(new Object[]{});
-		kunInput.add(comboBox_1);
+		kunInputGeburtsdatum = new JTextField();
+		kunInput.add(kunInputGeburtsdatum);
+		kunInputGeburtsdatum.setColumns(10);
 		
-		label_2 = new JLabel("Von");
-		kunInput.add(label_2);
+		kunLblStrasse = new JLabel("Strasse");
+		kunInput.add(kunLblStrasse);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		kunInput.add(textField);
+		kunInputStrasse = new JTextField();
+		kunInputStrasse.setColumns(10);
+		kunInput.add(kunInputStrasse);
 		
-		label_3 = new JLabel("Bis");
-		kunInput.add(label_3);
+		kunLblWohnort = new JLabel("Wohnort");
+		kunInput.add(kunLblWohnort);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		kunInput.add(textField_1);
+		kunInputWohnort = new JTextField();
+		kunInput.add(kunInputWohnort);
+		kunInputWohnort.setColumns(10);
+		
+		kunLblPlz = new JLabel("PLZ");
+		kunInput.add(kunLblPlz);
+		
+		kunInputPlz = new JTextField();
+		kunInput.add(kunInputPlz);
+		kunInputPlz.setColumns(10);
+		
+		
+		
+		
+		
 		
 		medPanel = new JPanel();
 		tabbedPane.addTab("Medium", null, medPanel, null);
@@ -428,31 +466,52 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		medPanel.add(medInput);
 		medInput.setLayout(new GridLayout(0, 2, 0, 5));
 		
-		label_4 = new JLabel("Kunde");
-		medInput.add(label_4);
+		medLblTitel = new JLabel("Titel");
+		medInput.add(medLblTitel);
 		
-		comboBox_2 = new JComboBox(new Object[]{});
-		medInput.add(comboBox_2);
+		medInputTitel = new JTextField();
+		medInput.add(medInputTitel);
+		medInputTitel.setColumns(10);
 		
-		label_5 = new JLabel("Medium");
-		medInput.add(label_5);
+		medLblTyp = new JLabel("Typ");
+		medInput.add(medLblTyp);
 		
-		comboBox_3 = new JComboBox(new Object[]{});
-		medInput.add(comboBox_3);
+		medInputTyp = new JTextField();
+		medInput.add(medInputTyp);
+		medInputTyp.setColumns(10);
 		
-		label_6 = new JLabel("Von");
-		medInput.add(label_6);
+		medLblAutor = new JLabel("Autor");
+		medInput.add(medLblAutor);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		medInput.add(textField_2);
+		medInputAutor = new JTextField();
+		medInput.add(medInputAutor);
+		medInputAutor.setColumns(10);
 		
-		label_7 = new JLabel("Bis");
-		medInput.add(label_7);
+		medLblAltersbeschrnkung = new JLabel("Altersbeschr\u00E4nkung\r\n");
+		medInput.add(medLblAltersbeschrnkung);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		medInput.add(textField_3);
+		medInputAltersbeschränkung = new JTextField();
+		medInput.add(medInputAltersbeschränkung);
+		medInputAltersbeschränkung.setColumns(10);
+		
+		medLblKosten = new JLabel("Kosten");
+		medInput.add(medLblKosten);
+		
+		medInputKosten = new JTextField();
+		medInput.add(medInputKosten);
+		medInputKosten.setColumns(10);
+		
+		medLblGenre = new JLabel("Genre");
+		medInput.add(medLblGenre);
+		
+		medInputGenre = new JTextField();
+		medInput.add(medInputGenre);
+		medInputGenre.setColumns(10);
+		
+		
+		
+		
+		
 		
 		regPanel = new JPanel();
 		tabbedPane.addTab("Regal", null, regPanel, null);
@@ -471,31 +530,41 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		regPanel.add(regInput);
 		regInput.setLayout(new GridLayout(0, 2, 0, 5));
 		
-		label_8 = new JLabel("Kunde");
-		regInput.add(label_8);
+		regLblStandort = new JLabel("Standort");
+		regInput.add(regLblStandort);
 		
-		comboBox_4 = new JComboBox(new Object[]{});
-		regInput.add(comboBox_4);
+		String[] regBoxStandortArguments = new String[staMap.size()];
+		cnt = 0;
+		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
+			Standort sta = staMap.get(iterator.next());
+			regBoxStandortArguments[cnt] = sta.getOrt() + " ( " + sta.getId() + " )";
+			cnt++;
+		}
 		
-		label_9 = new JLabel("Medium");
-		regInput.add(label_9);
+		regBoxStandort = new JComboBox(regBoxStandortArguments);
+		regInput.add(regBoxStandort);
 		
-		comboBox_5 = new JComboBox(new Object[]{});
-		regInput.add(comboBox_5);
+		regLblMedium = new JLabel("Medium");
+		regInput.add(regLblMedium);
 		
-		label_10 = new JLabel("Von");
-		regInput.add(label_10);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		regInput.add(textField_4);
+		String[] regBoxMediumArguments = new String[medMap.size()];
+		cnt = 0;
+		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
+			Medium med = medMap.get(iterator.next());
+			regBoxMediumArguments[cnt] = med.getTitel() + " ( " + med.getId() + " )";
+			cnt++;
+		}
 		
-		label_11 = new JLabel("Bis");
-		regInput.add(label_11);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		regInput.add(textField_5);
+		regBoxMedium = new JComboBox(regBoxMediumArguments);
+		regInput.add(regBoxMedium);
+		
+		
+		
+		
+		
+		
 		
 		staPanel = new JPanel();
 		tabbedPane.addTab("Standort", null, staPanel, null);
@@ -514,32 +583,53 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		staPanel.add(staInput);
 		staInput.setLayout(new GridLayout(0, 2, 0, 5));
 		
-		label_12 = new JLabel("Kunde");
-		staInput.add(label_12);
+		staLblPlz = new JLabel("PLZ");
+		staInput.add(staLblPlz);
 		
-		comboBox_6 = new JComboBox(new Object[]{});
-		staInput.add(comboBox_6);
+		staInputPlz = new JTextField();
+		staInputPlz.setColumns(10);
+		staInput.add(staInputPlz);
 		
-		label_13 = new JLabel("Medium");
-		staInput.add(label_13);
+		staLblOrt = new JLabel("Ort");
+		staInput.add(staLblOrt);
 		
-		comboBox_7 = new JComboBox(new Object[]{});
-		staInput.add(comboBox_7);
+		staInputOrt = new JTextField();
+		staInputOrt.setColumns(10);
+		staInput.add(staInputOrt);
 		
-		label_14 = new JLabel("Von");
-		staInput.add(label_14);
+		staLblStrasse = new JLabel("Strasse");
+		staInput.add(staLblStrasse);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		staInput.add(textField_6);
+		staInputStrasse = new JTextField();
+		staInput.add(staInputStrasse);
+		staInputStrasse.setColumns(10);
 		
-		label_15 = new JLabel("Bis");
-		staInput.add(label_15);
+		staLblBibliothekar = new JLabel("Bibliothekar");
+		staInput.add(staLblBibliothekar);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		staInput.add(textField_7);
+		
+		String[] staBoxBibliothekarArguments = new String[bibMap.size()];
+		cnt = 0;
+		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
+			Bibliothekar bib = bibMap.get(iterator.next());
+			staBoxBibliothekarArguments[cnt] = bib.getName() + " ( " + bib.getId() + " )";
+			cnt++;
+		}
+		
+		staBoxBibliothekar = new JComboBox(staBoxBibliothekarArguments);
+		staInput.add(staBoxBibliothekar);
 
+		
+		
+		
+		
+		
+		// #############################################################################################
+		// #############################################################################################
+		
+		//Fill the tables
+
+		
 		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
 			Bibliothekar bib = bibMap.get(iterator.next());
 			Object[] content = bib.getFields();
@@ -553,6 +643,40 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			content[1] = model.getConnection().getKundeById((int) content[1]).getName();
 			content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
 			entTableModel.addRow(content);
+		}
+		
+		
+		for (Iterator iterator = kunMap.keySet().iterator(); iterator.hasNext();){
+			Kunde kun = kunMap.get(iterator.next());
+			Object[] content = kun.getFields();
+			
+			kunTableModel.addRow(content);
+		}
+		
+		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
+			Medium med = medMap.get(iterator.next());
+			Object[] content = med.getFields();
+
+			medTableModel.addRow(content);
+		}
+		
+		for (Iterator iterator = regMap.keySet().iterator(); iterator.hasNext();){
+			Regal reg = regMap.get(iterator.next());
+			Object[] content = reg.getFields();
+			
+			content[1] = model.getConnection().getStandortById((int) content[1]).getOrt();
+			content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
+			
+			regTableModel.addRow(content);
+		}
+		
+		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
+			Standort sta = staMap.get(iterator.next());
+			Object[] content = sta.getFields();
+			
+			content[4] = model.getConnection().getBibliothekarById((int) content[4]).getName();
+			
+			staTableModel.addRow(content);
 		}
 		/*
 		 * for (int i = 0; i < bibList.size(); i++){

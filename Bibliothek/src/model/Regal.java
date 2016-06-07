@@ -24,4 +24,8 @@ public class Regal {
 	public void setMediumId(int medium_id) {
 		this.medium_id = medium_id;
 	}
+	public Object[] getFields() {
+		Object[] fields = {id,standort_id,medium_id};
+		return fields;
+	}
 }
