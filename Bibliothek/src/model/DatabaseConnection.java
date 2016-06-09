@@ -622,10 +622,10 @@ public class DatabaseConnection {
 				String sql = "UPDATE Bibliothekar SET name='" + bib.getName() + "', geburtsdatum='"
 						+ bib.getGbdatum() + "' WHERE bibliothekar_id='" + bib.getId() + "';";
 				result = query.executeUpdate(sql);
-				
+
 				System.out.println(sql);
 				System.out.println(result);
-				
+
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
@@ -647,6 +647,18 @@ public class DatabaseConnection {
 		case "Entlehnung":
 			idName = "entlehnung_id";
 			break;
+		case "Kunde":
+			idName = "kunde_id";
+			break;
+		case "Medium":
+			idName = "medium_id";
+			break;
+		case "Regal":
+			idName = "regal_id";
+			break;
+		case "Standort":
+			idName = "standort_id";
+			break;
 		default:
 			break;
 		}
@@ -658,6 +670,7 @@ public class DatabaseConnection {
 				query = conn.createStatement();
 				String sql = "SELECT " + idName + " FROM " + tableName + " ORDER BY " + idName
 						+ " DESC LIMIT 1;";
+				System.out.println(sql);
 				ResultSet result = query.executeQuery(sql);
 				result.next();
 				id = result.getInt(idName);

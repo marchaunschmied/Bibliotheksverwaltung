@@ -177,8 +177,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		staMap = model.getConnection().getStandortAll();
 
 		/**
-		 * Declare all table models
-		 * each table model is unique for each table
+		 * Declare all table models each table model is unique for each table
 		 * 
 		 */
 		bibTableModel = new DefaultTableModel(new Object[][] {},
@@ -195,20 +194,19 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		};
 
-		
 		kunTableModel = new DefaultTableModel(new Object[][] {},
-				new String[] { "id", "name", "Geburtsdatum", "strasse", "wohnort", "plz"}){
+				new String[] { "id", "name", "Geburtsdatum", "strasse", "wohnort", "plz" }){
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
 		};
-		medTableModel = new DefaultTableModel(new Object[][] {},
-				new String[] { "id", "titel", "typ", "autor", "Altersbeschränkung", "kosten", "genre" }){
+		medTableModel = new DefaultTableModel(new Object[][] {}, new String[] { "id", "titel",
+				"typ", "autor", "Altersbeschränkung", "kosten", "genre" }){
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
 		};
-		
+
 		regTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "standort", "medium" }){
 			public boolean isCellEditable(int row, int column) {
@@ -216,13 +214,12 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		};
 		staTableModel = new DefaultTableModel(new Object[][] {},
-				new String[] { "id", "plz", "ort","strasse","bilbiothekar" }){
+				new String[] { "id", "plz", "ort", "strasse", "bilbiothekar" }){
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
 		};
-		
-		
+
 		/**
 		 * 
 		 */
@@ -285,13 +282,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
 
-		
-		
-		
-		
-		
-		
-		
 		bibPanel = new JPanel();
 		tabbedPane.addTab("Bibliothekar", bibPanel);
 		bibPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -322,10 +312,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		bibInput.add(bibInputGeburtsdatum);
 		bibInputGeburtsdatum.setColumns(10);
 
-		
-		
-		
-		
 		entPanel = new JPanel();
 		tabbedPane.addTab("Entlehnung", null, entPanel, null);
 		entPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -386,153 +372,138 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		entInputBis = new JTextField();
 		entInput.add(entInputBis);
 		entInputBis.setColumns(10);
-		
-		
-		
-		
-		
-		
+
 		kunPanel = new JPanel();
 		tabbedPane.addTab("Kunde", null, kunPanel, null);
 		kunPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		kunScrollPane = new JScrollPane();
 		kunPanel.add(kunScrollPane);
-		
+
 		kunTable = new JTable(kunTableModel);
 		kunScrollPane.setViewportView(kunTable);
-		
+
 		kunInput = new JPanel();
-		kunInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
-		
-						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		kunInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
+
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		kunPanel.add(kunInput);
 		kunInput.setLayout(new GridLayout(0, 2, 0, 5));
-		
+
 		kunLblName = new JLabel("Name");
 		kunInput.add(kunLblName);
-		
+
 		kunInputName = new JTextField();
 		kunInput.add(kunInputName);
 		kunInputName.setColumns(10);
-		
+
 		kunLblGeburtsdatum = new JLabel("Geburtsdatum");
 		kunInput.add(kunLblGeburtsdatum);
-		
+
 		kunInputGeburtsdatum = new JTextField();
 		kunInput.add(kunInputGeburtsdatum);
 		kunInputGeburtsdatum.setColumns(10);
-		
+
 		kunLblStrasse = new JLabel("Strasse");
 		kunInput.add(kunLblStrasse);
-		
+
 		kunInputStrasse = new JTextField();
 		kunInputStrasse.setColumns(10);
 		kunInput.add(kunInputStrasse);
-		
+
 		kunLblWohnort = new JLabel("Wohnort");
 		kunInput.add(kunLblWohnort);
-		
+
 		kunInputWohnort = new JTextField();
 		kunInput.add(kunInputWohnort);
 		kunInputWohnort.setColumns(10);
-		
+
 		kunLblPlz = new JLabel("PLZ");
 		kunInput.add(kunLblPlz);
-		
+
 		kunInputPlz = new JTextField();
 		kunInput.add(kunInputPlz);
 		kunInputPlz.setColumns(10);
-		
-		
-		
-		
-		
-		
+
 		medPanel = new JPanel();
 		tabbedPane.addTab("Medium", null, medPanel, null);
 		medPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		medScrollPane = new JScrollPane();
 		medPanel.add(medScrollPane);
-		
+
 		medTable = new JTable(medTableModel);
 		medScrollPane.setViewportView(medTable);
-		
+
 		medInput = new JPanel();
-		medInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
-		
-						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		medInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
+
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		medPanel.add(medInput);
 		medInput.setLayout(new GridLayout(0, 2, 0, 5));
-		
+
 		medLblTitel = new JLabel("Titel");
 		medInput.add(medLblTitel);
-		
+
 		medInputTitel = new JTextField();
 		medInput.add(medInputTitel);
 		medInputTitel.setColumns(10);
-		
+
 		medLblTyp = new JLabel("Typ");
 		medInput.add(medLblTyp);
-		
+
 		medInputTyp = new JTextField();
 		medInput.add(medInputTyp);
 		medInputTyp.setColumns(10);
-		
+
 		medLblAutor = new JLabel("Autor");
 		medInput.add(medLblAutor);
-		
+
 		medInputAutor = new JTextField();
 		medInput.add(medInputAutor);
 		medInputAutor.setColumns(10);
-		
+
 		medLblAltersbeschrnkung = new JLabel("Altersbeschr\u00E4nkung\r\n");
 		medInput.add(medLblAltersbeschrnkung);
-		
+
 		medInputAltersbeschränkung = new JTextField();
 		medInput.add(medInputAltersbeschränkung);
 		medInputAltersbeschränkung.setColumns(10);
-		
+
 		medLblKosten = new JLabel("Kosten");
 		medInput.add(medLblKosten);
-		
+
 		medInputKosten = new JTextField();
 		medInput.add(medInputKosten);
 		medInputKosten.setColumns(10);
-		
+
 		medLblGenre = new JLabel("Genre");
 		medInput.add(medLblGenre);
-		
+
 		medInputGenre = new JTextField();
 		medInput.add(medInputGenre);
 		medInputGenre.setColumns(10);
-		
-		
-		
-		
-		
-		
+
 		regPanel = new JPanel();
 		tabbedPane.addTab("Regal", null, regPanel, null);
 		regPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		regScrollPane = new JScrollPane();
 		regPanel.add(regScrollPane);
-		
+
 		regTable = new JTable(regTableModel);
 		regScrollPane.setViewportView(regTable);
-		
+
 		regInput = new JPanel();
-		regInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
-		
-						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		regInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
+
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		regPanel.add(regInput);
 		regInput.setLayout(new GridLayout(0, 2, 0, 5));
-		
+
 		regLblStandort = new JLabel("Standort");
 		regInput.add(regLblStandort);
-		
+
 		String[] regBoxStandortArguments = new String[staMap.size()];
 		cnt = 0;
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
@@ -540,14 +511,13 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			regBoxStandortArguments[cnt] = sta.getOrt() + " ( " + sta.getId() + " )";
 			cnt++;
 		}
-		
+
 		regBoxStandort = new JComboBox(regBoxStandortArguments);
 		regInput.add(regBoxStandort);
-		
+
 		regLblMedium = new JLabel("Medium");
 		regInput.add(regLblMedium);
-		
-		
+
 		String[] regBoxMediumArguments = new String[medMap.size()];
 		cnt = 0;
 		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
@@ -555,59 +525,51 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			regBoxMediumArguments[cnt] = med.getTitel() + " ( " + med.getId() + " )";
 			cnt++;
 		}
-		
-		
+
 		regBoxMedium = new JComboBox(regBoxMediumArguments);
 		regInput.add(regBoxMedium);
-		
-		
-		
-		
-		
-		
-		
+
 		staPanel = new JPanel();
 		tabbedPane.addTab("Standort", null, staPanel, null);
 		staPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		staScrollPane = new JScrollPane();
 		staPanel.add(staScrollPane);
-		
+
 		staTable = new JTable(staTableModel);
 		staScrollPane.setViewportView(staTable);
-		
+
 		staInput = new JPanel();
-		staInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
-		
-						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		staInput.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Eingabe",
+
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		staPanel.add(staInput);
 		staInput.setLayout(new GridLayout(0, 2, 0, 5));
-		
+
 		staLblPlz = new JLabel("PLZ");
 		staInput.add(staLblPlz);
-		
+
 		staInputPlz = new JTextField();
 		staInputPlz.setColumns(10);
 		staInput.add(staInputPlz);
-		
+
 		staLblOrt = new JLabel("Ort");
 		staInput.add(staLblOrt);
-		
+
 		staInputOrt = new JTextField();
 		staInputOrt.setColumns(10);
 		staInput.add(staInputOrt);
-		
+
 		staLblStrasse = new JLabel("Strasse");
 		staInput.add(staLblStrasse);
-		
+
 		staInputStrasse = new JTextField();
 		staInput.add(staInputStrasse);
 		staInputStrasse.setColumns(10);
-		
+
 		staLblBibliothekar = new JLabel("Bibliothekar");
 		staInput.add(staLblBibliothekar);
-		
-		
+
 		String[] staBoxBibliothekarArguments = new String[bibMap.size()];
 		cnt = 0;
 		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
@@ -615,21 +577,15 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			staBoxBibliothekarArguments[cnt] = bib.getName() + " ( " + bib.getId() + " )";
 			cnt++;
 		}
-		
+
 		staBoxBibliothekar = new JComboBox(staBoxBibliothekarArguments);
 		staInput.add(staBoxBibliothekar);
 
-		
-		
-		
-		
-		
 		// #############################################################################################
 		// #############################################################################################
-		
-		//Fill the tables
 
-		
+		// Fill the tables
+
 		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
 			Bibliothekar bib = bibMap.get(iterator.next());
 			Object[] content = bib.getFields();
@@ -644,38 +600,37 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
 			entTableModel.addRow(content);
 		}
-		
-		
+
 		for (Iterator iterator = kunMap.keySet().iterator(); iterator.hasNext();){
 			Kunde kun = kunMap.get(iterator.next());
 			Object[] content = kun.getFields();
-			
+
 			kunTableModel.addRow(content);
 		}
-		
+
 		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
 			Medium med = medMap.get(iterator.next());
 			Object[] content = med.getFields();
 
 			medTableModel.addRow(content);
 		}
-		
+
 		for (Iterator iterator = regMap.keySet().iterator(); iterator.hasNext();){
 			Regal reg = regMap.get(iterator.next());
 			Object[] content = reg.getFields();
-			
+
 			content[1] = model.getConnection().getStandortById((int) content[1]).getOrt();
 			content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
-			
+
 			regTableModel.addRow(content);
 		}
-		
+
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
 			Standort sta = staMap.get(iterator.next());
 			Object[] content = sta.getFields();
-			
+
 			content[4] = model.getConnection().getBibliothekarById((int) content[4]).getName();
-			
+
 			staTableModel.addRow(content);
 		}
 		/*
@@ -722,6 +677,20 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			break;
 		case 1:
 			selectedTable = entTable;
+			break;
+		case 2:
+			selectedTable = kunTable;
+			break;
+		case 3:
+			selectedTable = medTable;
+			break;
+		case 4:
+			selectedTable = regTable;
+			break;
+		case 5:
+			selectedTable = staTable;
+			break;
+
 		default:
 			break;
 		}
@@ -782,6 +751,66 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				entInputVon.setText("");
 				entInputBis.setText("");
 				break;
+			case "Kunde":
+				Kunde kun = new Kunde();
+
+				Date kunGeburtsdatum = Date.valueOf(kunInputGeburtsdatum.getText());
+				String kunName = kunInputName.getText();
+				String kunPlz = kunInputPlz.getText();
+				String kunStrasse = kunInputStrasse.getText();
+				String kunWohnort = kunInputWohnort.getText();
+
+				kun.setGbdatum(kunGeburtsdatum);
+				kun.setName(kunName);
+				kun.setPlz(kunPlz);
+				kun.setStrasse(kunStrasse);
+				kun.setWohnort(kunWohnort);
+
+				model.getConnection().insertKunde(kun);
+				kun.setId(model.getConnection().getLastEntryId("Kunde"));
+
+				// add the new object to all components
+				kunMap.put(kun.getId(), kun);
+
+				kunTableModel.addRow(kun.getFields());
+				kunInputGeburtsdatum.setText("");
+				kunInputName.setText("");
+				kunInputPlz.setText("");
+				kunInputStrasse.setText("");
+				kunInputWohnort.setText("");
+				break;
+			case "Medium":
+				Medium med = new Medium();
+
+				int medAltersbes = Integer.parseInt(medInputAltersbeschränkung.getText());
+				String medAutor = medInputAutor.getText();
+				String medGenre = medInputGenre.getText();
+				int medKosten = Integer.parseInt(medInputKosten.getText());
+				String medTitel = medInputTitel.getText();
+				String medTyp = medInputTyp.getText();
+				
+				med.setAltersbes(medAltersbes);
+				med.setAutor(medAutor);
+				med.setGenre(medGenre);
+				med.setKosten(medKosten);
+				med.setTitel(medTitel);
+				med.setTyp(medTyp);
+				
+				model.getConnection().insertMedium(med);
+				med.setId(model.getConnection().getLastEntryId("Medium"));
+
+				// add the new object to all components
+				medMap.put(med.getId(), med);
+				
+				medTableModel.addRow(med.getFields());
+				
+				medInputAltersbeschränkung.setText("");
+				medInputAutor.setText("");
+				medInputGenre.setText("");
+				medInputKosten.setText("");
+				medInputTitel.setText("");
+				medInputTyp.setText("");
+				break;
 			default:
 				break;
 			}
@@ -803,14 +832,14 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 					bib.setName(bibName);
 					bib.setGbdatum(bibGeburtsdatum);
-					bib.setId((int)selectedTable.getValueAt(row, 0));
+					bib.setId((int) selectedTable.getValueAt(row, 0));
 
 					model.getConnection().updateBibliothekar(bib);
 
 					// add the new object to all components
 					bibMap.replace(bib.getId(), bib);
-					bibTableModel.setValueAt(bib.getName(),row, 1);
-					bibTableModel.setValueAt(bib.getGbdatum(),row, 2);
+					bibTableModel.setValueAt(bib.getName(), row, 1);
+					bibTableModel.setValueAt(bib.getGbdatum(), row, 2);
 					bibInputName.setText("");
 					bibInputGeburtsdatum.setText("");
 					break;
@@ -825,7 +854,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		}
 
-		if(e.getSource() == btnLschen){
+		if(e.getSource() == btnLschen)
+
+		{
 			if(row != -1){
 				int id = (int) selectedTable.getValueAt(row, 0);
 
@@ -851,11 +882,13 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		if(e.getSource() == btnWhlen){
+		if(e.getSource() == btnWhlen)
+
+		{
 
 			if(row != -1){
-				bibInputName.setText(selectedTable.getValueAt(row,1).toString());
-				bibInputGeburtsdatum.setText(selectedTable.getValueAt(row,2).toString());
+				bibInputName.setText(selectedTable.getValueAt(row, 1).toString());
+				bibInputGeburtsdatum.setText(selectedTable.getValueAt(row, 2).toString());
 			}
 		}
 	}
