@@ -884,7 +884,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 					Bibliothekar bib = new Bibliothekar();
 
 					String bibName = bibInputName.getText();
-
 					Date bibGeburtsdatum = Date.valueOf(bibInputGeburtsdatum.getText());
 
 					bib.setName(bibName);
@@ -929,7 +928,26 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 					entMap.remove(id);
 					entTableModel.removeRow(id);
 					break;
-
+				case "Kunde":
+					model.getConnection().deleteKundeById(id);
+					kunMap.remove(id);
+					kunTableModel.removeRow(row);
+					break;
+				case "Medium":
+					model.getConnection().deleteMediumById(id);
+					medMap.remove(id);
+					medTableModel.removeRow(row);
+					break;
+				case "Regal":
+					model.getConnection().deleteRegalById(id);
+					regMap.remove(id);
+					regTableModel.removeRow(row);
+					break;
+				case "Standort":
+					model.getConnection().deleteStandortById(id);
+					staMap.remove(id);
+					staTableModel.removeRow(row);
+					break;
 				default:
 					break;
 				}
@@ -944,8 +962,17 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		{
 
 			if(row != -1){
-				bibInputName.setText(selectedTable.getValueAt(row, 1).toString());
-				bibInputGeburtsdatum.setText(selectedTable.getValueAt(row, 2).toString());
+				
+				switch (selectedTableName) {
+				case "Bibliothekar":
+					bibInputName.setText(selectedTable.getValueAt(row, 1).toString());
+					bibInputGeburtsdatum.setText(selectedTable.getValueAt(row, 2).toString());
+					break;
+				case "Entlehnung":
+									
+				default:
+					break;
+				}
 			}
 		}
 	}
