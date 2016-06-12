@@ -624,7 +624,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 			regTableModel.addRow(content);
 		}
-
+ 
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
 			Standort sta = staMap.get(iterator.next());
 			Object[] content = sta.getFields();
@@ -655,9 +655,15 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	private int getComboId(JComboBox box) {
 		char[] c = box.getSelectedItem().toString().toCharArray();
 		String id = "";
+		boolean isText = true;
 		for (int i = 0; i < c.length; i++){
-			if(Character.isDigit(c[i])){
-				id += c[i];
+			if(!isText){
+				if(Character.isDigit(c[i])){
+					id += c[i];
+				}
+			}
+			if(c[i] == '('){
+				isText = false;
 			}
 		}
 		return Integer.parseInt(id);
@@ -744,10 +750,10 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 				// add the new object to all components
 				entMap.put(ent.getId(), ent);
-				Object[] content = ent.getFields();
-				content[1] = model.getConnection().getKundeById((int) content[1]).getName();
-				content[2] = model.getConnection().getMediumById((int) content[2]).getTitel();
-				entTableModel.addRow(content);
+				Object[] entContent = ent.getFields();
+				entContent[1] = model.getConnection().getKundeById((int) entContent[1]).getName();
+				entContent[2] = model.getConnection().getMediumById((int) entContent[2]).getTitel();
+				entTableModel.addRow(entContent);
 				entInputVon.setText("");
 				entInputBis.setText("");
 				break;
@@ -788,28 +794,79 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				int medKosten = Integer.parseInt(medInputKosten.getText());
 				String medTitel = medInputTitel.getText();
 				String medTyp = medInputTyp.getText();
-				
+
 				med.setAltersbes(medAltersbes);
 				med.setAutor(medAutor);
 				med.setGenre(medGenre);
 				med.setKosten(medKosten);
 				med.setTitel(medTitel);
 				med.setTyp(medTyp);
-				
+
 				model.getConnection().insertMedium(med);
 				med.setId(model.getConnection().getLastEntryId("Medium"));
 
 				// add the new object to all components
 				medMap.put(med.getId(), med);
-				
+
 				medTableModel.addRow(med.getFields());
-				
+
 				medInputAltersbeschränkung.setText("");
 				medInputAutor.setText("");
 				medInputGenre.setText("");
 				medInputKosten.setText("");
 				medInputTitel.setText("");
 				medInputTyp.setText("");
+				break;
+
+			case "Regal":
+				Regal reg = new Regal();
+
+				int regMediumId = getComboId(regBoxMedium);
+				int regStanortId = getComboId(regBoxStandort);
+
+				reg.setMediumId(regMediumId);
+				reg.setStandortId(regStanortId);
+
+				model.getConnection().insertRegal(reg);
+				reg.setId(model.getConnection().getLastEntryId("Regal"));
+
+				// add the new object to all components
+				regMap.put(reg.getId(), reg);
+
+				Object[] regContent = reg.getFields();
+				regContent[1] = model.getConnection().getStandortById((int) regContent[1]).getOrt();
+				regContent[2] = model.getConnection().getMediumById((int) regContent[2]).getTitel();
+				regTableModel.addRow(regContent);
+				break;
+			case "Standort":
+				Standort sta = new Standort();
+
+
+				int staBibliothekarId = getComboId(staBoxBibliothekar);
+				String staOrt = staInputOrt.getText();
+				int staPlz = Integer.parseInt(staInputPlz.getText());
+				String staStrasse = staInputStrasse.getText();
+
+				sta.setBibliothekarId(staBibliothekarId);
+				sta.setOrt(staOrt);
+				sta.setPlz(staPlz);
+				sta.setStrasse(staStrasse);
+				
+				System.out.println(sta.getBibliothekarId());
+				
+			
+				
+				model.getConnection().insertStandort(sta);
+				sta.setId(model.getConnection().getLastEntryId("Standort"));
+
+				// add the new object to all components
+				staMap.put(sta.getId(), sta);
+
+				Object[] staContent = sta.getFields();
+				
+				
+				staContent[4] = model.getConnection().getBibliothekarById((int) staContent[4]).getName();
+				staTableModel.addRow(staContent);
 				break;
 			default:
 				break;

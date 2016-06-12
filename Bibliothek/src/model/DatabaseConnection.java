@@ -315,14 +315,16 @@ public class DatabaseConnection {
 	}
 
 	public void insertStandort(Standort sta) {
+
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "INSERT INTO Standort (plz,ort,strasse,bibliothekar_id) VALUES('"
-						+ sta.getPlz() + "','" + sta.getOrt() + "','" + sta.getStrasse()
+						+ sta.getPlz() + "','" + sta.getOrt() + "','" + sta.getStrasse() + "','"
 						+ sta.getBibliothekarId() + "');";
+				System.out.println(sql);
 				int result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
@@ -670,7 +672,6 @@ public class DatabaseConnection {
 				query = conn.createStatement();
 				String sql = "SELECT " + idName + " FROM " + tableName + " ORDER BY " + idName
 						+ " DESC LIMIT 1;";
-				System.out.println(sql);
 				ResultSet result = query.executeQuery(sql);
 				result.next();
 				id = result.getInt(idName);

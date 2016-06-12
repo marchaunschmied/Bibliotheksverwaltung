@@ -32,15 +32,17 @@ public class Standort {
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
 	}
+
 	public int getBibliothekarId() {
-		return id;
+		return bibliothekar_id;
 	}
 	public void setBibliothekarId(int bibliothekar_id) {
 		this.bibliothekar_id = bibliothekar_id;
-		
 	}
+
 	public Object[] getFields() {
 		Object[] fields = {id,plz,ort,strasse,bibliothekar_id};
 		return fields;
 	}
+
 }
