@@ -2,9 +2,15 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * The model class is just a wrapper for the database connection because the data is only stored in the database
+ * @author MarcAnton
+ *
+ */
 public class BibliothekModel {
 	
-	public DatabaseConnection connection = null;
+	
+	private DatabaseConnection connection = null;
 
 	
 	public BibliothekModel(){
@@ -12,6 +18,10 @@ public class BibliothekModel {
 	}
 
 
+	/**
+	 * 
+	 * @return the Databaseconnection
+	 */
 	public DatabaseConnection getConnection() {
 		return connection;
 	}

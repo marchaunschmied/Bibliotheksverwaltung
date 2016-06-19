@@ -50,7 +50,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 
 /**
- * This class is partly auto-generated. For the GUI the Eclipse Window Builder is used
+ * This class is partly auto-generated. Eclipse Window Builder is used for the GUI The Code changes heavily after every
+ * change in the GUI. Every Component is named after the table it belongs to, it will make it easier to read the code.
  * 
  * @author MarcAnton
  *
@@ -152,7 +153,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	private JLabel staLblBibliothekar;
 
 	/**
-	 * Create the frame.
+	 * Create the frame and every component in the window Most of it is auto-generated
 	 */
 	public BibliothekViewGUI(BibliothekModel model, BibliothekController controller) {
 
@@ -167,7 +168,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 
 		/**
-		 * reads all data from the database and puts it into a hash map
+		 * reads all data from the database and puts it into a LinkedHashMap
 		 */
 		bibMap = model.getConnection().getBibliothekarAll();
 		entMap = model.getConnection().getEntlehnungAll();
@@ -177,8 +178,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		staMap = model.getConnection().getStandortAll();
 
 		/**
-		 * Declare all table models each table model is unique for each table
-		 * 
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
 		 */
 		bibTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "name", "Geburtsdatum" }){
@@ -187,6 +187,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		};
 
+		/**
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
+		 */
 		entTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "kunde_id", "medium_id", "von", "bis" }){
 			public boolean isCellEditable(int row, int column) {
@@ -194,12 +197,19 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		};
 
+		/**
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
+		 */
 		kunTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "name", "Geburtsdatum", "strasse", "wohnort", "plz" }){
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
 		};
+
+		/**
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
+		 */
 		medTableModel = new DefaultTableModel(new Object[][] {}, new String[] { "id", "titel",
 				"typ", "autor", "Altersbeschränkung", "kosten", "genre" }){
 			public boolean isCellEditable(int row, int column) {
@@ -207,12 +217,19 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		};
 
+		/**
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
+		 */
 		regTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "standort", "medium" }){
 			public boolean isCellEditable(int row, int column) {
 				return false;// This causes all cells to be not editable
 			}
 		};
+
+		/**
+		 * Declare all table models each table model is unique for each table A TableModel is needed for the data handling
+		 */
 		staTableModel = new DefaultTableModel(new Object[][] {},
 				new String[] { "id", "plz", "ort", "strasse", "bilbiothekar" }){
 			public boolean isCellEditable(int row, int column) {
@@ -221,7 +238,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		};
 
 		/**
-		 * 
+		 * auto-generated code
 		 */
 		buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.WEST);
@@ -336,6 +353,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		String[] entBoxKundeArguments = new String[kunMap.size()];
 		int cnt = 0;
+		/**
+		 * The ComboBox has to be filled with the right values
+		 */
 		for (Iterator iterator = kunMap.keySet().iterator(); iterator.hasNext();){
 			Kunde kun = kunMap.get(iterator.next());
 			entBoxKundeArguments[cnt] = kun.getName() + " ( " + kun.getId() + " )";
@@ -350,6 +370,10 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		String[] entBoxMediumArguments = new String[medMap.size()];
 		cnt = 0;
+
+		/**
+		 * The ComboBox has to be filled with the right values
+		 */
 		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
 			Medium med = medMap.get(iterator.next());
 			entBoxMediumArguments[cnt] = med.getTitel() + " ( " + med.getId() + " )";
@@ -506,6 +530,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		String[] regBoxStandortArguments = new String[staMap.size()];
 		cnt = 0;
+		/**
+		 * The ComboBox has to be filled with the right values
+		 */
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
 			Standort sta = staMap.get(iterator.next());
 			regBoxStandortArguments[cnt] = sta.getOrt() + " ( " + sta.getId() + " )";
@@ -520,6 +547,10 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		String[] regBoxMediumArguments = new String[medMap.size()];
 		cnt = 0;
+
+		/**
+		 * The ComboBox has to be filled with the right values
+		 */
 		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
 			Medium med = medMap.get(iterator.next());
 			regBoxMediumArguments[cnt] = med.getTitel() + " ( " + med.getId() + " )";
@@ -572,6 +603,10 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 		String[] staBoxBibliothekarArguments = new String[bibMap.size()];
 		cnt = 0;
+
+		/**
+		 * The ComboBox has to be filled with the right values
+		 */
 		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
 			Bibliothekar bib = bibMap.get(iterator.next());
 			staBoxBibliothekarArguments[cnt] = bib.getName() + " ( " + bib.getId() + " )";
@@ -584,8 +619,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		// #############################################################################################
 		// #############################################################################################
 
-		// Fill the tables
-
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = bibMap.keySet().iterator(); iterator.hasNext();){
 			Bibliothekar bib = bibMap.get(iterator.next());
 			Object[] content = bib.getFields();
@@ -593,6 +629,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			bibTableModel.addRow(content);
 		}
 
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = entMap.keySet().iterator(); iterator.hasNext();){
 			Entlehnung ent = entMap.get(iterator.next());
 			Object[] content = ent.getFields();
@@ -601,6 +640,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			entTableModel.addRow(content);
 		}
 
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = kunMap.keySet().iterator(); iterator.hasNext();){
 			Kunde kun = kunMap.get(iterator.next());
 			Object[] content = kun.getFields();
@@ -608,6 +650,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			kunTableModel.addRow(content);
 		}
 
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = medMap.keySet().iterator(); iterator.hasNext();){
 			Medium med = medMap.get(iterator.next());
 			Object[] content = med.getFields();
@@ -615,6 +660,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			medTableModel.addRow(content);
 		}
 
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = regMap.keySet().iterator(); iterator.hasNext();){
 			Regal reg = regMap.get(iterator.next());
 			Object[] content = reg.getFields();
@@ -625,6 +673,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			regTableModel.addRow(content);
 		}
 
+		/**
+		 * Fills all the tables with the right values If there is a outer join with the id, a *getById is used
+		 */
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
 			Standort sta = staMap.get(iterator.next());
 			Object[] content = sta.getFields();
@@ -633,25 +684,21 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 			staTableModel.addRow(content);
 		}
-		/*
-		 * for (int i = 0; i < bibList.size(); i++){
-		 * 
-		 * 
-		 * Object[] content = bibList.get(i).getFields();
-		 * 
-		 * bibTableModel.addRow(content); }
-		 */
-		/*
-		 * for (
-		 * 
-		 * int i = 0; i < entList.size(); i++)
-		 * 
-		 * { Object[] content = { entList.get(i).getId(), entList.get(i).getKundeId(), entList.get(i).getMediumId(),
-		 * entList.get(i).getVon(), entList.get(i).getBis() }; entTableModel.addRow(content); }
-		 */
 
 	}
 
+	/**
+	 * The ComboBox entrys are listed like this: xxx ( id )
+	 * 
+	 * This allows us to get the right id for the entry. Because a name is not unique there would be issues if there was no
+	 * id in the combobox
+	 * 
+	 * This method parses the id out of the string
+	 * 
+	 * @param box
+	 *            the selected ComboBox
+	 * @return id of the selected entry
+	 */
 	private int getComboId(JComboBox box) {
 		char[] c = box.getSelectedItem().toString().toCharArray();
 		String id = "";
@@ -672,6 +719,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * The name of the selected pane --> tableName
+		 */
 		int selectedPane = tabbedPane.getSelectedIndex();
 
 		JTable selectedTable = null;
@@ -709,25 +759,34 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		System.out.println("Zeile: " + row);
 		System.out.println("Spalte: " + col);
 
+		/**
+		 * "Neu" Button pressed
+		 */
 		if(e.getSource() == btnNeu){
 
+			/**
+			 * Depending on the selected Table there are different actions
+			 */
 			switch (selectedTableName) {
 			case "Bibliothekar":
 				Bibliothekar b = new Bibliothekar();
 
+				/**
+				 * Get the data from the GUI
+				 */
 				String bibName = bibInputName.getText();
-
 				Date bibGeburtsdatum = Date.valueOf(bibInputGeburtsdatum.getText());
 
 				b.setName(bibName);
 				b.setGbdatum(bibGeburtsdatum);
 
-				// model.getConnection().insertBibliothekar(b);
 				controller.insertBibliothekar(b);
 
 				b.setId(model.getConnection().getLastEntryId("Bibliothekar"));
 
-				// add the new object to all components
+				/**
+				 * Refresh the view
+				 */
 				bibMap.put(b.getId(), b);
 				bibTableModel.addRow(b.getFields());
 				bibInputName.setText("");
@@ -737,6 +796,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			case "Entlehnung":
 				Entlehnung ent = new Entlehnung();
 
+				/**
+				 * Get the data from the GUI
+				 */
 				int entKunde = getComboId(entBoxKunde);
 				int entMedium = getComboId(entBoxMedium);
 				Date von = Date.valueOf(entInputVon.getText());
@@ -750,8 +812,13 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				controller.insertEntlehnung(ent);
 				ent.setId(model.getConnection().getLastEntryId("Entlehnung"));
 
-				// add the new object to all components
+				/**
+				 * Refresh the view
+				 */
 				entMap.put(ent.getId(), ent);
+				/**
+				 * Converts the id to a object, otherwise the id would be shown
+				 */
 				Object[] entContent = ent.getFields();
 				entContent[1] = model.getConnection().getKundeById((int) entContent[1]).getName();
 				entContent[2] = model.getConnection().getMediumById((int) entContent[2]).getTitel();
@@ -914,11 +981,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 					model.getConnection().updateEntlehnung(ent);
 
 					entMap.replace(ent.getId(), ent);
-					/*
-					 * Object[] entContent = ent.getFields(); entContent[1] = model.getConnection().getKundeById((int)
-					 * entContent[1]).getName(); entContent[2] = model.getConnection().getMediumById((int)
-					 * entContent[2]).getTitel();
-					 */
+
 					entTableModel.setValueAt(
 							model.getConnection().getKundeById(ent.getKundeId()).getName(), row, 1);
 					entTableModel.setValueAt(
@@ -1020,18 +1083,18 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 					sta.setOrt(staOrt);
 					sta.setPlz(staPlz);
 					sta.setStrasse(staStrasse);
-					sta.setId((int) selectedTable.getValueAt(row,0));
-					
-		
-					model.getConnection().updateStandort(sta);
-		
-					staMap.replace(sta.getId(),sta); 
+					sta.setId((int) selectedTable.getValueAt(row, 0));
 
-					staTableModel.setValueAt(sta.getPlz(),row,1);
+					model.getConnection().updateStandort(sta);
+
+					staMap.replace(sta.getId(), sta);
+
+					staTableModel.setValueAt(sta.getPlz(), row, 1);
 					staTableModel.setValueAt(sta.getOrt(), row, 2);
 					staTableModel.setValueAt(sta.getStrasse(), row, 3);
-					staTableModel.setValueAt(model.getConnection().getBibliothekarById(sta.getBibliothekarId()).getName(),row,4);
-					
+					staTableModel.setValueAt(model.getConnection()
+							.getBibliothekarById(sta.getBibliothekarId()).getName(), row, 4);
+
 					break;
 
 				default:
@@ -1088,9 +1151,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		if(e.getSource() == btnWhlen)
-
-		{
+		if(e.getSource() == btnWhlen){
 
 			if(row != -1){
 

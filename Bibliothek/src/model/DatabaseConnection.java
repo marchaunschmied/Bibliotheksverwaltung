@@ -11,7 +11,9 @@ import java.util.LinkedHashMap;
 import oracle.net.aso.e;
 
 /**
- * Interface for the connection between the database and the program. Everything has to go trough this class.
+ * Interface for the connection between the database and the program. Everything has to go trough this class. There are many
+ * methods which basically do the same, but have different names. TODO find a way to only have on method which can handle
+ * every table obeject --> interface, abstract class???
  * 
  * @author MarcAnton
  *
@@ -19,12 +21,35 @@ import oracle.net.aso.e;
 public class DatabaseConnection {
 
 	private static Connection conn = null;
-	private static String dbHost = "192.168.56.2"; // Hostname
-	private static String dbPort = "3306"; // Port -- Standard: 3306
-	private static String dbName = "Bibliothek"; // Database name
-	private static String dbUser = "root"; // Database user
-	private static String dbPass = ""; // Database password
 
+	/**
+	 * IP address of the MySQL Database
+	 */
+	private static String dbHost = "192.168.56.2";
+
+	/**
+	 * MySQL Port -- Standard: 3306
+	 */
+	private static String dbPort = "3306";
+
+	/**
+	 * Database name
+	 */
+	private static String dbName = "Bibliothek";
+
+	/**
+	 * Username for the database These are defaults
+	 */
+	private static String dbUser = "root";
+
+	/**
+	 * Password for the Database
+	 */
+	private static String dbPass = "";
+
+	/**
+	 * This string is used to connect to the database
+	 */
 	private static final String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/"
 			+ dbName + "?" + "user=" + dbUser + "&" + "password=" + dbPass;
 
@@ -33,15 +58,22 @@ public class DatabaseConnection {
 	 */
 	public DatabaseConnection() {
 
-		// Connection String
+		/**
+		 * Connection String
+		 */
 		System.out.println(connectionString);
 		try{
 
-			// Load the jdbc driver
+			/**
+			 * Load the jdbc driver
+			 */
 			Class.forName("com.mysql.jdbc.Driver");
 
-			// Connect to the Database
+			/**
+			 * Connect to the Database
+			 */
 			conn = DriverManager.getConnection(connectionString);
+
 			// conn = DriverManager.getConnection("jdbc:mysql://192.168.56.2:3306","root","");
 
 		}catch (ClassNotFoundException e){
@@ -58,7 +90,13 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
-	// G E T --- D A T A ---
+	/**
+	 * This method gets a single Bibliothekar based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Bibliothekar</b> or null if not found in the database
+	 */
 
 	public Bibliothekar getBibliothekarById(int id) {
 		Bibliothekar b = null;
@@ -87,6 +125,13 @@ public class DatabaseConnection {
 		return b;
 	}
 
+	/**
+	 * This method gets a single Entlehnung based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Entlehnung</b> or null if not found in the database
+	 */
 	public Entlehnung getEntlehnungById(int id) {
 		Entlehnung ent = null;
 
@@ -115,6 +160,13 @@ public class DatabaseConnection {
 		return ent;
 	}
 
+	/**
+	 * This method gets a single Kunde based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Kunde</b> or null if not found in the database
+	 */
 	public Kunde getKundeById(int id) {
 		Kunde k = null;
 
@@ -145,6 +197,13 @@ public class DatabaseConnection {
 		return k;
 	}
 
+	/**
+	 * This method gets a single Medium based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Medium</b> or null if not found in the database
+	 */
 	public Medium getMediumById(int id) {
 		Medium med = null;
 
@@ -175,6 +234,13 @@ public class DatabaseConnection {
 		return med;
 	}
 
+	/**
+	 * This method gets a single Regal based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Regal</b> or null if not found in the database
+	 */
 	public Regal getRegalById(int id) {
 		Regal reg = null;
 
@@ -201,6 +267,13 @@ public class DatabaseConnection {
 		return reg;
 	}
 
+	/**
+	 * This method gets a single Standort based on its id
+	 * 
+	 * @param id
+	 *            the id given by the database
+	 * @return <b>Standort</b> or null if not found in the database
+	 */
 	public Standort getStandortById(int id) {
 		Standort sta = null;
 
@@ -232,15 +305,18 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
-	// S E T --- D A T A
-	// ID is not set because of auto increment in MYSQL
-
+	/**
+	 * Adds a Bibliothekar to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param bib
+	 */
 	public void insertBibliothekar(Bibliothekar bib) {
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
+
 				String sql = "INSERT INTO Bibliothekar (name,geburtsdatum) VALUES('" + bib.getName()
 						+ "','" + bib.getGbdatum() + "');";
 				int result = query.executeUpdate(sql);
@@ -250,6 +326,11 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Adds a Entlehnung to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param ent
+	 */
 	public void insertEntlehnung(Entlehnung ent) {
 		if(conn != null){
 			Statement query;
@@ -266,6 +347,11 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Adds a Kunde to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param kun
+	 */
 	public void insertKunde(Kunde kun) {
 		if(conn != null){
 			Statement query;
@@ -282,6 +368,11 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Adds a Medium to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param med
+	 */
 	public void insertMedium(Medium med) {
 		if(conn != null){
 			Statement query;
@@ -299,6 +390,11 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Adds a Regal to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param reg
+	 */
 	public void insertRegal(Regal reg) {
 		if(conn != null){
 			Statement query;
@@ -314,6 +410,11 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Adds a Standort to the database The id must not be set, because the database generates the id with auto-increment
+	 * 
+	 * @param sta
+	 */
 	public void insertStandort(Standort sta) {
 
 		if(conn != null){
@@ -335,6 +436,10 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
+	/**
+	 * Deletes a Bibliothekar with the given id 
+	 * @param id
+	 */
 	public void deleteBibliothekarById(int id) {
 		if(conn != null){
 			Statement query;
@@ -349,6 +454,10 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * Deletes a Entlehnung with the given id 
+	 * @param id
+	 */
 	public void deleteEntlehnungById(int id) {
 		if(conn != null){
 			Statement query;
@@ -363,6 +472,11 @@ public class DatabaseConnection {
 		}
 	}
 
+
+	/**
+	 * Deletes a Kunde with the given id 
+	 * @param id
+	 */
 	public void deleteKundeById(int id) {
 		if(conn != null){
 			Statement query;
@@ -376,7 +490,12 @@ public class DatabaseConnection {
 			}
 		}
 	}
+	
 
+	/**
+	 * Deletes a Medium with the given id 
+	 * @param id
+	 */
 	public void deleteMediumById(int id) {
 		if(conn != null){
 			Statement query;
@@ -391,6 +510,11 @@ public class DatabaseConnection {
 		}
 	}
 
+
+	/**
+	 * Deletes a Regal with the given id 
+	 * @param id
+	 */
 	public void deleteRegalById(int id) {
 		if(conn != null){
 			Statement query;
@@ -404,7 +528,12 @@ public class DatabaseConnection {
 			}
 		}
 	}
+	
 
+	/**
+	 * Deletes a Standort with the given id 
+	 * @param id
+	 */
 	public void deleteStandortById(int id) {
 		if(conn != null){
 			Statement query;
@@ -422,6 +551,12 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Bibliothekar> getBibliothekarAll() {
 
 		LinkedHashMap<Integer, Bibliothekar> bibMap = new LinkedHashMap<Integer, Bibliothekar>();
@@ -449,7 +584,12 @@ public class DatabaseConnection {
 		}
 		return bibMap;
 	}
-
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Entlehnung> getEntlehnungAll() {
 
 		LinkedHashMap<Integer, Entlehnung> entMap = new LinkedHashMap<Integer, Entlehnung>();
@@ -480,7 +620,12 @@ public class DatabaseConnection {
 		}
 		return entMap;
 	}
-
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Kunde> getKundeAll() {
 
 		LinkedHashMap<Integer, Kunde> kunMap = new LinkedHashMap<Integer, Kunde>();
@@ -514,7 +659,12 @@ public class DatabaseConnection {
 		return kunMap;
 
 	}
-
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Medium> getMediumAll() {
 
 		LinkedHashMap<Integer, Medium> medMap = new LinkedHashMap<Integer, Medium>();
@@ -548,7 +698,12 @@ public class DatabaseConnection {
 		}
 		return medMap;
 	}
-
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Regal> getRegalAll() {
 
 		LinkedHashMap<Integer, Regal> regMap = new LinkedHashMap<Integer, Regal>();
@@ -578,7 +733,12 @@ public class DatabaseConnection {
 		}
 		return regMap;
 	}
-
+	/**
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
+	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
+	 * The LinkedHashMap is orderd by the id
+	 * @return a LinkedHashMap with every single entry in the database
+	 */
 	public LinkedHashMap<Integer, Standort> getStandortAll() {
 
 		LinkedHashMap<Integer, Standort> staMap = new LinkedHashMap<Integer, Standort>();
@@ -613,6 +773,11 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 
+	/**
+	 * Updates a entry in the database 
+	 * @param bib the Bibliothekar which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateBibliothekar(Bibliothekar bib) {
 
 		int result = 0;
@@ -635,7 +800,11 @@ public class DatabaseConnection {
 
 		return result;
 	}
-
+	/**
+	 * Updates a entry in the database 
+	 * @param ent the Entlehnung which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateEntlehnung(Entlehnung ent) {
 
 		int result = 0;
@@ -664,6 +833,11 @@ public class DatabaseConnection {
 		return result;
 	}
 
+	/**
+	 * Updates a entry in the database 
+	 * @param kun the Kunde which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateKunde(Kunde kun) {
 
 		int result = 0;
@@ -692,6 +866,11 @@ public class DatabaseConnection {
 		return result;
 	}
 
+	/**
+	 * Updates a entry in the database 
+	 * @param med the Medium which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateMedium(Medium med) {
 
 		int result = 0;
@@ -719,6 +898,12 @@ public class DatabaseConnection {
 
 		return result;
 	}
+
+	/**
+	 * Updates a entry in the database 
+	 * @param reg the Regal which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateRegal(Regal reg) {
 
 		int result = 0;
@@ -727,8 +912,9 @@ public class DatabaseConnection {
 
 			try{
 				query = conn.createStatement();
-				String sql = "UPDATE Regal SET standort_id='" + reg.getStandortId() + "', medium_id='"
-						+ reg.getMediumId() + "' WHERE regal_id ='" + reg.getId() + "';";
+				String sql = "UPDATE Regal SET standort_id='" + reg.getStandortId()
+						+ "', medium_id='" + reg.getMediumId() + "' WHERE regal_id ='" + reg.getId()
+						+ "';";
 
 				System.out.println(sql);
 
@@ -744,7 +930,12 @@ public class DatabaseConnection {
 
 		return result;
 	}
-	
+
+	/**
+	 * Updates a entry in the database 
+	 * @param sta the Standort which gets updated
+	 * @return  1 if the update has worked otherwise its -1
+	 */
 	public int updateStandort(Standort sta) {
 
 		int result = 0;
@@ -753,8 +944,9 @@ public class DatabaseConnection {
 
 			try{
 				query = conn.createStatement();
-				String sql = "UPDATE Standort SET plz='" + sta.getPlz() + "', ort='"
-						+ sta.getOrt() + "', strasse='"+ sta.getStrasse() + "', bibliothekar_id='"+ sta.getBibliothekarId() +"' WHERE standort_id ='" + sta.getId() + "';";
+				String sql = "UPDATE Standort SET plz='" + sta.getPlz() + "', ort='" + sta.getOrt()
+						+ "', strasse='" + sta.getStrasse() + "', bibliothekar_id='"
+						+ sta.getBibliothekarId() + "' WHERE standort_id ='" + sta.getId() + "';";
 
 				System.out.println(sql);
 
@@ -773,10 +965,21 @@ public class DatabaseConnection {
 
 	// #############################################################################################
 	// #############################################################################################
+	/**
+	 * Is needed to retrieve the id of an object because the database generates the id. 
+	 * After an insertion the object doesnt have any id. It has to be fetched from the database.
+	 * The last entry is always the newest one. 
+	 * @param tableName The name of the Table where the last entry has to be returned
+	 * @return
+	 */
 	public int getLastEntryId(String tableName) {
 
 		String idName = "";
 		int id = -1;
+		
+		/**
+		 * The SQL Statement is different for every table
+		 */
 		switch (tableName) {
 		case "Bibliothekar":
 			idName = "bibliothekar_id";
@@ -818,7 +1021,5 @@ public class DatabaseConnection {
 
 		return id;
 	}
-
-	
 
 }

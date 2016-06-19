@@ -17,6 +17,12 @@ import model.Medium;
 import model.Regal;
 import model.Standort;
 
+/**
+ * This is a prototyping View which is text-based in the terminal
+ * It is not used in the programm
+ * @author MarcAnton
+ *
+ */
 public class BibliothekView {
 
 	BibliothekModel model;
