@@ -1,6 +1,6 @@
 package model;
 
-public class Medium {
+public class Medium implements ITable {
 	private int id;
 	private String titel;
 	private String typ;
@@ -57,5 +57,10 @@ public class Medium {
 	public Object[] getFields() {
 		Object[] fields = { id, titel, typ, autor, altersbes, kosten,genre };
 		return fields;
+	}
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Medium";
 	}
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class Standort {
+public class Standort implements ITable{
 	private int id;
 	private int plz;
 	private String ort;
@@ -43,6 +43,11 @@ public class Standort {
 	public Object[] getFields() {
 		Object[] fields = {id,plz,ort,strasse,bibliothekar_id};
 		return fields;
+	}
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Standort";
 	}
 
 }

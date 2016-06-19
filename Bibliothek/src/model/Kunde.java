@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Kunde {
+public class Kunde implements ITable {
 
 	private int id;
 	private String name;
@@ -66,6 +66,12 @@ public class Kunde {
 	public Object[] getFields() {
 		Object[] fields = { id, name, gbdatum, strasse, wohnort, plz };
 		return fields;
+	}
+
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Kunde";
 	}
 
 }

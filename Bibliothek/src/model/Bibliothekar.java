@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Bibliothekar {
+public class Bibliothekar implements ITable {
 	private int id;
 	private String name;
 	private Date gbdatum;
@@ -34,5 +34,13 @@ public class Bibliothekar {
 	public Object[] getFields() {
 		Object[] fields = { id, name, gbdatum };
 		return fields;
+	}
+	
+	
+
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Bibliothekar";
 	}
 }

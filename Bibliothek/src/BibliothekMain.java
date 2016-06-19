@@ -1,5 +1,10 @@
 import java.awt.EventQueue;
 
+/**
+ * @author MarcAnton
+ * 
+ * This is the main class for the programm
+ */
 import controller.BibliothekController;
 import model.BibliothekModel;
 import view.BibliothekView;

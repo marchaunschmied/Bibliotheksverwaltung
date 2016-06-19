@@ -624,7 +624,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 			regTableModel.addRow(content);
 		}
- 
+
 		for (Iterator iterator = staMap.keySet().iterator(); iterator.hasNext();){
 			Standort sta = staMap.get(iterator.next());
 			Object[] content = sta.getFields();
@@ -722,7 +722,9 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				b.setName(bibName);
 				b.setGbdatum(bibGeburtsdatum);
 
-				model.getConnection().insertBibliothekar(b);
+				// model.getConnection().insertBibliothekar(b);
+				controller.insertBibliothekar(b);
+
 				b.setId(model.getConnection().getLastEntryId("Bibliothekar"));
 
 				// add the new object to all components
@@ -745,7 +747,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				ent.setVon(von);
 				ent.setBis(bis);
 
-				model.getConnection().insertEntlehnung(ent);
+				controller.insertEntlehnung(ent);
 				ent.setId(model.getConnection().getLastEntryId("Entlehnung"));
 
 				// add the new object to all components
@@ -772,7 +774,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				kun.setStrasse(kunStrasse);
 				kun.setWohnort(kunWohnort);
 
-				model.getConnection().insertKunde(kun);
+				controller.insertKunde(kun);
 				kun.setId(model.getConnection().getLastEntryId("Kunde"));
 
 				// add the new object to all components
@@ -802,7 +804,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				med.setTitel(medTitel);
 				med.setTyp(medTyp);
 
-				model.getConnection().insertMedium(med);
+				controller.insertMedium(med);
 				med.setId(model.getConnection().getLastEntryId("Medium"));
 
 				// add the new object to all components
@@ -827,7 +829,7 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				reg.setMediumId(regMediumId);
 				reg.setStandortId(regStanortId);
 
-				model.getConnection().insertRegal(reg);
+				controller.insertRegal(reg);
 				reg.setId(model.getConnection().getLastEntryId("Regal"));
 
 				// add the new object to all components
@@ -841,7 +843,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 			case "Standort":
 				Standort sta = new Standort();
 
-
 				int staBibliothekarId = getComboId(staBoxBibliothekar);
 				String staOrt = staInputOrt.getText();
 				int staPlz = Integer.parseInt(staInputPlz.getText());
@@ -851,21 +852,19 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 				sta.setOrt(staOrt);
 				sta.setPlz(staPlz);
 				sta.setStrasse(staStrasse);
-				
+
 				System.out.println(sta.getBibliothekarId());
-				
-			
-				
-				model.getConnection().insertStandort(sta);
+
+				controller.insertStandort(sta);
 				sta.setId(model.getConnection().getLastEntryId("Standort"));
 
 				// add the new object to all components
 				staMap.put(sta.getId(), sta);
 
 				Object[] staContent = sta.getFields();
-				
-				
-				staContent[4] = model.getConnection().getBibliothekarById((int) staContent[4]).getName();
+
+				staContent[4] = model.getConnection().getBibliothekarById((int) staContent[4])
+						.getName();
 				staTableModel.addRow(staContent);
 				break;
 			default:
@@ -892,7 +891,6 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 
 					model.getConnection().updateBibliothekar(bib);
 
-					// add the new object to all components
 					bibMap.replace(bib.getId(), bib);
 					bibTableModel.setValueAt(bib.getName(), row, 1);
 					bibTableModel.setValueAt(bib.getGbdatum(), row, 2);
@@ -900,9 +898,142 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 					bibInputGeburtsdatum.setText("");
 					break;
 				case "Entlehnung":
-					System.out.println(getComboId(entBoxKunde));
-					System.out.println(getComboId(entBoxMedium));
+					Entlehnung ent = new Entlehnung();
+
+					int entKunde = getComboId(entBoxKunde);
+					int entMedium = getComboId(entBoxMedium);
+					Date von = Date.valueOf(entInputVon.getText());
+					Date bis = Date.valueOf(entInputBis.getText());
+
+					ent.setKundeId(entKunde);
+					ent.setMediumId(entMedium);
+					ent.setVon(von);
+					ent.setBis(bis);
+					ent.setId((int) selectedTable.getValueAt(row, 0));
+
+					model.getConnection().updateEntlehnung(ent);
+
+					entMap.replace(ent.getId(), ent);
+					/*
+					 * Object[] entContent = ent.getFields(); entContent[1] = model.getConnection().getKundeById((int)
+					 * entContent[1]).getName(); entContent[2] = model.getConnection().getMediumById((int)
+					 * entContent[2]).getTitel();
+					 */
+					entTableModel.setValueAt(
+							model.getConnection().getKundeById(ent.getKundeId()).getName(), row, 1);
+					entTableModel.setValueAt(
+							model.getConnection().getMediumById(ent.getMediumId()).getTitel(), row,
+							2);
+					entTableModel.setValueAt(ent.getVon(), row, 3);
+					entTableModel.setValueAt(ent.getBis(), row, 4);
 					break;
+				case "Kunde":
+					Kunde kun = new Kunde();
+
+					Date kunGeburtsdatum = Date.valueOf(kunInputGeburtsdatum.getText());
+					String kunName = kunInputName.getText();
+					String kunPlz = kunInputPlz.getText();
+					String kunStrasse = kunInputStrasse.getText();
+					String kunWohnort = kunInputWohnort.getText();
+
+					kun.setGbdatum(kunGeburtsdatum);
+					kun.setName(kunName);
+					kun.setPlz(kunPlz);
+					kun.setStrasse(kunStrasse);
+					kun.setWohnort(kunWohnort);
+					kun.setId((int) selectedTable.getValueAt(row, 0));
+
+					model.getConnection().updateKunde(kun);
+
+					// add the new object to all components
+					kunMap.replace(kun.getId(), kun);
+
+					kunTableModel.setValueAt(kun.getName(), row, 1);
+					kunTableModel.setValueAt(kun.getGbdatum(), row, 2);
+					kunTableModel.setValueAt(kun.getStrasse(), row, 3);
+					kunTableModel.setValueAt(kun.getWohnort(), row, 4);
+					kunTableModel.setValueAt(kun.getPlz(), row, 5);
+					break;
+				case "Medium":
+					Medium med = new Medium();
+
+					int medAltersbes = Integer.parseInt(medInputAltersbeschränkung.getText());
+					String medAutor = medInputAutor.getText();
+					String medGenre = medInputGenre.getText();
+					double medKosten = Double.parseDouble(medInputKosten.getText());
+					String medTitel = medInputTitel.getText();
+					String medTyp = medInputTyp.getText();
+
+					med.setAltersbes(medAltersbes);
+					med.setAutor(medAutor);
+					med.setGenre(medGenre);
+					med.setKosten(medKosten);
+					med.setTitel(medTitel);
+					med.setTyp(medTyp);
+					med.setId((int) selectedTable.getValueAt(row, 0));
+
+					model.getConnection().updateMedium(med);
+
+					// add the new object to all components
+					medMap.replace(med.getId(), med);
+
+					medTableModel.setValueAt(med.getTitel(), row, 1);
+					medTableModel.setValueAt(med.getTyp(), row, 2);
+					medTableModel.setValueAt(med.getAutor(), row, 3);
+					medTableModel.setValueAt(med.getAltersbes(), row, 4);
+					medTableModel.setValueAt(med.getKosten(), row, 5);
+					medTableModel.setValueAt(med.getGenre(), row, 6);
+
+					break;
+
+				case "Regal":
+					Regal reg = new Regal();
+
+					int regMediumId = getComboId(regBoxMedium);
+					int regStanortId = getComboId(regBoxStandort);
+
+					reg.setMediumId(regMediumId);
+					reg.setStandortId(regStanortId);
+					reg.setId((int) selectedTable.getValueAt(row, 0));
+
+					model.getConnection().updateRegal(reg);
+
+					// add the new object to all components
+					regMap.replace(reg.getId(), reg);
+
+					regTableModel.setValueAt(
+							model.getConnection().getStandortById(reg.getStandortId()).getOrt(),
+							row, 1);
+					regTableModel.setValueAt(
+							model.getConnection().getMediumById(reg.getMediumId()).getTitel(), row,
+							2);
+					break;
+				case "Standort":
+					Standort sta = new Standort();
+
+					int staBibliothekarId = getComboId(staBoxBibliothekar);
+					String staOrt = staInputOrt.getText();
+					int staPlz = Integer.parseInt(staInputPlz.getText());
+					String staStrasse = staInputStrasse.getText();
+
+					sta.setBibliothekarId(staBibliothekarId);
+					sta.setOrt(staOrt);
+					sta.setPlz(staPlz);
+					sta.setStrasse(staStrasse);
+					sta.setId((int) selectedTable.getValueAt(row,0));
+					
+		
+					model.getConnection().updateStandort(sta);
+		
+					staMap.replace(sta.getId(),sta); 
+
+					staTableModel.setValueAt(sta.getPlz(),row,1);
+					staTableModel.setValueAt(sta.getOrt(), row, 2);
+					staTableModel.setValueAt(sta.getStrasse(), row, 3);
+					staTableModel.setValueAt(model.getConnection().getBibliothekarById(sta.getBibliothekarId()).getName(),row,4);
+					
+					break;
+
 				default:
 					break;
 				}
@@ -962,14 +1093,39 @@ public class BibliothekViewGUI extends JFrame implements ActionListener {
 		{
 
 			if(row != -1){
-				
+
 				switch (selectedTableName) {
 				case "Bibliothekar":
 					bibInputName.setText(selectedTable.getValueAt(row, 1).toString());
 					bibInputGeburtsdatum.setText(selectedTable.getValueAt(row, 2).toString());
 					break;
 				case "Entlehnung":
-									
+					entInputVon.setText(selectedTable.getValueAt(row, 3).toString());
+					entInputBis.setText(selectedTable.getValueAt(row, 4).toString());
+					break;
+				case "Kunde":
+					kunInputName.setText(selectedTable.getValueAt(row, 1).toString());
+					kunInputGeburtsdatum.setText(selectedTable.getValueAt(row, 2).toString());
+					kunInputStrasse.setText(selectedTable.getValueAt(row, 3).toString());
+					kunInputWohnort.setText(selectedTable.getValueAt(row, 4).toString());
+					kunInputPlz.setText(selectedTable.getValueAt(row, 5).toString());
+					break;
+				case "Medium":
+					medInputTitel.setText(selectedTable.getValueAt(row, 1).toString());
+					medInputTyp.setText(selectedTable.getValueAt(row, 2).toString());
+					medInputAutor.setText(selectedTable.getValueAt(row, 3).toString());
+					medInputAltersbeschränkung.setText(selectedTable.getValueAt(row, 4).toString());
+					medInputKosten.setText(selectedTable.getValueAt(row, 5).toString());
+					medInputGenre.setText(selectedTable.getValueAt(row, 6).toString());
+					break;
+				case "Regal":
+
+					break;
+				case "Standort":
+					staInputPlz.setText(selectedTable.getValueAt(row, 1).toString());
+					staInputOrt.setText(selectedTable.getValueAt(row, 2).toString());
+					staInputStrasse.setText(selectedTable.getValueAt(row, 3).toString());
+					break;
 				default:
 					break;
 				}

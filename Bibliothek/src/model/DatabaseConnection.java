@@ -636,6 +636,141 @@ public class DatabaseConnection {
 		return result;
 	}
 
+	public int updateEntlehnung(Entlehnung ent) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Entlehnung SET kunde_id='" + ent.getKundeId()
+						+ "', medium_id='" + ent.getMediumId() + "', von='" + ent.getVon()
+						+ "' , bis='" + ent.getBis() + "' WHERE entlehnung_id ='" + ent.getId()
+						+ "';";
+
+				System.out.println(sql);
+
+				result = query.executeUpdate(sql);
+
+				System.out.println(sql);
+				System.out.println(result);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	public int updateKunde(Kunde kun) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Kunde SET name='" + kun.getName() + "', geburtsdatum='"
+						+ kun.getGbdatum() + "', strasse='" + kun.getStrasse() + "' , wohnort='"
+						+ kun.getWohnort() + "', plz='" + kun.getPlz() + " ' WHERE kunde_id ='"
+						+ kun.getId() + "';";
+
+				System.out.println(sql);
+
+				result = query.executeUpdate(sql);
+
+				System.out.println(sql);
+				System.out.println(result);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	public int updateMedium(Medium med) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Medium SET titel='" + med.getTitel() + "', typ='"
+						+ med.getTyp() + "', autor='" + med.getAutor() + "' , altersbes='"
+						+ med.getAltersbes() + "', kosten='" + med.getKosten() + "', genre='"
+						+ med.getGenre() + "' WHERE medium_id ='" + med.getId() + "';";
+
+				System.out.println(sql);
+
+				result = query.executeUpdate(sql);
+
+				System.out.println(sql);
+				System.out.println(result);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	public int updateRegal(Regal reg) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Regal SET standort_id='" + reg.getStandortId() + "', medium_id='"
+						+ reg.getMediumId() + "' WHERE regal_id ='" + reg.getId() + "';";
+
+				System.out.println(sql);
+
+				result = query.executeUpdate(sql);
+
+				System.out.println(sql);
+				System.out.println(result);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	
+	public int updateStandort(Standort sta) {
+
+		int result = 0;
+		if(conn != null){
+			Statement query;
+
+			try{
+				query = conn.createStatement();
+				String sql = "UPDATE Standort SET plz='" + sta.getPlz() + "', ort='"
+						+ sta.getOrt() + "', strasse='"+ sta.getStrasse() + "', bibliothekar_id='"+ sta.getBibliothekarId() +"' WHERE standort_id ='" + sta.getId() + "';";
+
+				System.out.println(sql);
+
+				result = query.executeUpdate(sql);
+
+				System.out.println(sql);
+				System.out.println(result);
+
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
 	// #############################################################################################
 	// #############################################################################################
 	public int getLastEntryId(String tableName) {
@@ -683,5 +818,7 @@ public class DatabaseConnection {
 
 		return id;
 	}
+
+	
 
 }

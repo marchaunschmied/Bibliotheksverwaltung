@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Entlehnung {
+public class Entlehnung implements ITable {
 	private int id;
 	private int kunde_id;
 	private int medium_id;
@@ -44,5 +44,10 @@ public class Entlehnung {
 	public Object[] getFields() {
 		Object[] fields = { id, kunde_id, medium_id,von,bis };
 		return fields;
+	}
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Entlehnung";
 	}
 }

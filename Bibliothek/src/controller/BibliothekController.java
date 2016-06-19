@@ -1,11 +1,44 @@
 package controller;
 
 import model.BibliothekModel;
+import model.Bibliothekar;
+import model.Entlehnung;
+import model.ITable;
+import model.Kunde;
+import model.Medium;
+import model.Regal;
+import model.Standort;
+
 
 public class BibliothekController {
 
+	private BibliothekModel model;
+
 	public BibliothekController(BibliothekModel model) {
-		// TODO Auto-generated constructor stub
+		this.model = model;
 	}
+
+	public void insertBibliothekar(Bibliothekar bib) {
+		model.getConnection().insertBibliothekar(bib);
+	}
+	
+	public void insertEntlehnung(Entlehnung ent){
+		model.getConnection().insertEntlehnung(ent);
+	}
+	
+	public void insertKunde(Kunde kun){
+		model.getConnection().insertKunde(kun);
+	}
+	
+	public void insertMedium(Medium med){
+		model.getConnection().insertMedium(med);
+	}
+	public void insertRegal(Regal reg){
+		model.getConnection().insertRegal(reg);
+	}
+	public void insertStandort(Standort sta){
+		model.getConnection().insertStandort(sta);
+	}
+
 
 }

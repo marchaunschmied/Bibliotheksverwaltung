@@ -1,6 +1,6 @@
 package model;
 
-public class Regal {
+public class Regal implements ITable{
 	private int id;
 	private int standort_id;
 	private int medium_id;
@@ -27,5 +27,10 @@ public class Regal {
 	public Object[] getFields() {
 		Object[] fields = {id,standort_id,medium_id};
 		return fields;
+	}
+	
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return "Regal";
 	}
 }
