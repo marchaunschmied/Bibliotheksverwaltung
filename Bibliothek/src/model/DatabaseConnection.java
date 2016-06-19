@@ -437,124 +437,138 @@ public class DatabaseConnection {
 	// #############################################################################################
 
 	/**
-	 * Deletes a Bibliothekar with the given id 
+	 * Deletes a Bibliothekar with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteBibliothekarById(int id) {
+	public int deleteBibliothekarById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Bibliothekar WHERE bibliothekar_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				 result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
 	/**
-	 * Deletes a Entlehnung with the given id 
+	 * Deletes a Entlehnung with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteEntlehnungById(int id) {
+	public int deleteEntlehnungById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Entlehnung WHERE entlehnung_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
-
 	/**
-	 * Deletes a Kunde with the given id 
+	 * Deletes a Kunde with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteKundeById(int id) {
+	public int deleteKundeById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Kunde WHERE kunde_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
-	
 
 	/**
-	 * Deletes a Medium with the given id 
+	 * Deletes a Medium with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteMediumById(int id) {
+	public int deleteMediumById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Medium WHERE medium_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
-
 	/**
-	 * Deletes a Regal with the given id 
+	 * Deletes a Regal with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteRegalById(int id) {
+	public int deleteRegalById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Regal WHERE regal_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
-	
 
 	/**
-	 * Deletes a Standort with the given id 
+	 * Deletes a Standort with the given id
+	 * 
 	 * @param id
 	 */
-	public void deleteStandortById(int id) {
+	public int deleteStandortById(int id) {
+		int result = -1;
 		if(conn != null){
 			Statement query;
 
 			try{
 				query = conn.createStatement();
 				String sql = "DELETE from Standort WHERE standort_id = '" + id + "' ;";
-				int result = query.executeUpdate(sql);
+				result = query.executeUpdate(sql);
 			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 
 	// #############################################################################################
 	// #############################################################################################
 
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Bibliothekar> getBibliothekarAll() {
@@ -584,10 +598,11 @@ public class DatabaseConnection {
 		}
 		return bibMap;
 	}
+
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Entlehnung> getEntlehnungAll() {
@@ -620,10 +635,11 @@ public class DatabaseConnection {
 		}
 		return entMap;
 	}
+
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Kunde> getKundeAll() {
@@ -659,10 +675,11 @@ public class DatabaseConnection {
 		return kunMap;
 
 	}
+
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Medium> getMediumAll() {
@@ -698,10 +715,11 @@ public class DatabaseConnection {
 		}
 		return medMap;
 	}
+
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Regal> getRegalAll() {
@@ -733,10 +751,11 @@ public class DatabaseConnection {
 		}
 		return regMap;
 	}
+
 	/**
-	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. 
-	 * The key for the LinkedHashMap is the id of an entry and the value the entry it self.
-	 * The LinkedHashMap is orderd by the id
+	 * A LinkedHashMap is used to guarantee that the entrys are always in the same order. The key for the LinkedHashMap is
+	 * the id of an entry and the value the entry it self. The LinkedHashMap is orderd by the id
+	 * 
 	 * @return a LinkedHashMap with every single entry in the database
 	 */
 	public LinkedHashMap<Integer, Standort> getStandortAll() {
@@ -774,9 +793,11 @@ public class DatabaseConnection {
 	// #############################################################################################
 
 	/**
-	 * Updates a entry in the database 
-	 * @param bib the Bibliothekar which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param bib
+	 *            the Bibliothekar which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateBibliothekar(Bibliothekar bib) {
 
@@ -800,10 +821,13 @@ public class DatabaseConnection {
 
 		return result;
 	}
+
 	/**
-	 * Updates a entry in the database 
-	 * @param ent the Entlehnung which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param ent
+	 *            the Entlehnung which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateEntlehnung(Entlehnung ent) {
 
@@ -834,9 +858,11 @@ public class DatabaseConnection {
 	}
 
 	/**
-	 * Updates a entry in the database 
-	 * @param kun the Kunde which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param kun
+	 *            the Kunde which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateKunde(Kunde kun) {
 
@@ -867,9 +893,11 @@ public class DatabaseConnection {
 	}
 
 	/**
-	 * Updates a entry in the database 
-	 * @param med the Medium which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param med
+	 *            the Medium which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateMedium(Medium med) {
 
@@ -900,9 +928,11 @@ public class DatabaseConnection {
 	}
 
 	/**
-	 * Updates a entry in the database 
-	 * @param reg the Regal which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param reg
+	 *            the Regal which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateRegal(Regal reg) {
 
@@ -932,9 +962,11 @@ public class DatabaseConnection {
 	}
 
 	/**
-	 * Updates a entry in the database 
-	 * @param sta the Standort which gets updated
-	 * @return  1 if the update has worked otherwise its -1
+	 * Updates a entry in the database
+	 * 
+	 * @param sta
+	 *            the Standort which gets updated
+	 * @return 1 if the update has worked otherwise its -1
 	 */
 	public int updateStandort(Standort sta) {
 
@@ -966,17 +998,18 @@ public class DatabaseConnection {
 	// #############################################################################################
 	// #############################################################################################
 	/**
-	 * Is needed to retrieve the id of an object because the database generates the id. 
-	 * After an insertion the object doesnt have any id. It has to be fetched from the database.
-	 * The last entry is always the newest one. 
-	 * @param tableName The name of the Table where the last entry has to be returned
+	 * Is needed to retrieve the id of an object because the database generates the id. After an insertion the object doesnt
+	 * have any id. It has to be fetched from the database. The last entry is always the newest one.
+	 * 
+	 * @param tableName
+	 *            The name of the Table where the last entry has to be returned
 	 * @return
 	 */
 	public int getLastEntryId(String tableName) {
 
 		String idName = "";
 		int id = -1;
-		
+
 		/**
 		 * The SQL Statement is different for every table
 		 */
